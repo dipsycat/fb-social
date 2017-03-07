@@ -3,23 +3,23 @@ dipsycat_fb_social_homepage:
     defaults: { _controller: DipsycatFbSocialBundle:Main:index }
 
 _security_login:
-    pattern:  /login
+    path:  /login
     defaults: { _controller: DipsycatFbSocialBundle:Security:login }
 
 _security_check:
-    pattern:  /login_check
+    path:  /login_check
 
 _security_logout:
-    pattern:  /logout
+    path:  /logout
 
 dipsycat_fb_social_admin_home:
-    pattern:  /admin/
+    path:  /admin/
     defaults: { _controller: DipsycatFbSocialBundle:Admin:index }
     
 dipsycat_fb_social_user_edit:
-    pattern:  /edit
+    path:  /edit
     defaults: { _controller: DipsycatFbSocialBundle:User:getUserForm }
     
 dipsycat_fb_social_user_edit_post:
-    pattern:  /edit_post
+    path:  /edit_post
     defaults: { _controller: DipsycatFbSocialBundle:User:postUserForm }    

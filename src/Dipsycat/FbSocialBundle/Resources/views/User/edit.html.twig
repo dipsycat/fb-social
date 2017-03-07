@@ -5,6 +5,7 @@
 {% endfor %}
 {{ form_start(form) }}
 {{ form_widget(form.username, {attr: { value : app.user.username } }) }}
+{{ form_widget(form.surname, {attr: { value : app.user.surname } }) }}
 {{ form_widget(form) }}
 <input type="submit" value="Save">
 {{ form_end(form) }}

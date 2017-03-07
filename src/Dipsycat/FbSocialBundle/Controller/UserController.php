@@ -40,6 +40,7 @@ class UserController extends Controller
                 $formData = $form->getData();
                 $user = $this->getUser();
                 $user->setUsername($formData->getUserName());
+                $user->setSurname($formData->getSurname());
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();

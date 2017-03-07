@@ -31,6 +31,13 @@ class User implements UserInterface
     
     /**
      *
+     * @var string surname
+     * @ORM\Column(type="string", length=255)
+     */
+    private $surname;
+    
+    /**
+     *
      * @var string password
      * @ORM\Column(type="string", length=255)
      */
@@ -195,4 +202,26 @@ class User implements UserInterface
         return md5($this->getUsername()) == md5($user->getUsername());
     }
 
+    /**
+     * Set surname
+     *
+     * @param string $surname
+     * @return User
+     */
+    public function setSurname($surname)
+    {
+        $this->surname = $surname;
+
+        return $this;
+    }
+
+    /**
+     * Get surname
+     *
+     * @return string 
+     */
+    public function getSurname()
+    {
+        return $this->surname;
+    }
 }
