@@ -1,0 +1,3 @@
+dipsycat_fb_social_homepage:
+    path:     /
+    defaults: { _controller: DipsycatFbSocialBundle:Default:index }

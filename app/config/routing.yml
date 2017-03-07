@@ -1,0 +1,3 @@
+dipsycat_fb_social:
+    resource: "@DipsycatFbSocialBundle/Resources/config/routing.yml"
+    prefix:   /
