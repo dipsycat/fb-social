@@ -4,12 +4,14 @@ namespace Dipsycat\FbSocialBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * User
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="Dipsycat\FbSocialBundle\Repository\UserRepository")
+ * @UniqueEntity(fields="username", message="Sorry, this username is already in use.", groups={"edit"})
  */
 class User implements UserInterface
 {
@@ -25,7 +27,7 @@ class User implements UserInterface
     /**
      *
      * @var string username
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $username;
     
@@ -182,7 +184,7 @@ class User implements UserInterface
     }
     
     public function eraseCredentials() {
-        $this->password = null;
+       //$this->password = null;
     }
 
     /**

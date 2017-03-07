@@ -34,13 +34,12 @@ class UserController extends Controller
         $data = ['result' => 'error'];
         if ($request->isMethod(Request::METHOD_POST)) {
             $user = new User();
+            $user = $this->getUser();
+            $userRepository = $this->getDoctrine()->getRepository('DipsycatFbSocialBundle:User');
+            $user = $userRepository->find($user->getId());
             $form = $this->createForm(new UserType(), $user);
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $formData = $form->getData();
-                $user = $this->getUser();
-                $user->setUsername($formData->getUserName());
-                $user->setSurname($formData->getSurname());
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();

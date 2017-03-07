@@ -7,8 +7,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class UserType extends AbstractType
-{
+class UserType extends AbstractType {
+
     public function buildForm(\Symfony\Component\Form\FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('username', TextType::class, [
@@ -22,10 +22,18 @@ class UserType extends AbstractType
                     'attr' => [
                         'placeholder' => 'SurName',
                     ]
-                ]);
+        ]);
     }
-    
+
     public function getName() {
         return 'user';
     }
+
+    public function getDefaultOptions(array $options) {
+        return array(
+            //'data_class' => 'Dipsycat\FbSocialBundle\Entity\User',
+            'validation_groups' => array('edit')
+        );
+    }
+
 }
