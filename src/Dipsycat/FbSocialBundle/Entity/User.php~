@@ -1,0 +1,67 @@
+<?php
+
+namespace Dipsycat\FbSocialBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * User
+ *
+ * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="Dipsycat\FbSocialBundle\Repository\UserRepository")
+ */
+class User
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
+     *
+     * @var string username
+     * @ORM\Column(type="string", length=255)
+     */
+    private $username;
+    
+    /**
+     *
+     * @var string password
+     * @ORM\Column(type="string", length=255)
+     */
+    private $password;
+    
+    /**
+     * @var string salt
+     * @ORM\Column(type="string", length=255)
+     */
+    private $salt;
+    
+    /**
+     * @var ArrayCollection $userRoles
+     * 
+     * @ORM\ManyToMany(targetEntity="Role")
+     * @ORM\JoinTable(name="user_role",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
+     * )
+     */
+    private $userRoles;
+    
+    
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

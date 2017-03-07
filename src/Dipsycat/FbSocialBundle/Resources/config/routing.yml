@@ -1,3 +1,17 @@
 dipsycat_fb_social_homepage:
     path:     /
-    defaults: { _controller: DipsycatFbSocialBundle:Default:index }
+    defaults: { _controller: DipsycatFbSocialBundle:Main:index }
+
+_security_login:
+    pattern:  /login
+    defaults: { _controller: DipsycatFbSocialBundle:Security:login }
+
+_security_check:
+    pattern:  /login_check
+
+_security_logout:
+    pattern:  /logout
+
+dipsycat_fb_social_admin_home:
+    pattern:  /admin/
+    defaults: { _controller: DipsycatFbSocialBundle:Admin:index }
