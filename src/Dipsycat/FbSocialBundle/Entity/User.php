@@ -146,7 +146,6 @@ class User implements UserInterface
      */
     public function getSalt()
     {
-        return '';
         return $this->salt;
     }
 
@@ -192,7 +191,12 @@ class User implements UserInterface
      * @return array
      */
     public function getRoles() {
-        return $this->getUserRoles()->toArray();
+        return array('ROLE_ADMIN');
+        $roles = [];
+        foreach ($this->getUserRoles() as $role) {
+            $roles[] = $role->getName();
+        }
+        return $roles;
     }
     
     /**

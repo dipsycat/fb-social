@@ -37,6 +37,7 @@ class UserController extends Controller
             $user = $this->getUser();
             $userRepository = $this->getDoctrine()->getRepository('DipsycatFbSocialBundle:User');
             $user = $userRepository->find($user->getId());
+            file_put_contents('d:\1.txt', print_r($user->getPassword(), true));
             $form = $this->createForm(new UserType(), $user);
             $form->handleRequest($request);
             if ($form->isValid()) {
