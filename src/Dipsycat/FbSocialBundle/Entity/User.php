@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="Dipsycat\FbSocialBundle\Repository\UserRepository")
- * @UniqueEntity(fields="username", message="Sorry, this username is already in use.", groups={"edit"})
+ * @UniqueEntity("username")
  */
 class User implements UserInterface
 {
@@ -191,7 +191,6 @@ class User implements UserInterface
      * @return array
      */
     public function getRoles() {
-        return array('ROLE_ADMIN');
         $roles = [];
         foreach ($this->getUserRoles() as $role) {
             $roles[] = $role->getName();

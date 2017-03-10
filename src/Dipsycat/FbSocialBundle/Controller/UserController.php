@@ -33,11 +33,7 @@ class UserController extends Controller
     public function postUserFormAction(Request $request) {
         $data = ['result' => 'error'];
         if ($request->isMethod(Request::METHOD_POST)) {
-            $user = new User();
             $user = $this->getUser();
-            $userRepository = $this->getDoctrine()->getRepository('DipsycatFbSocialBundle:User');
-            $user = $userRepository->find($user->getId());
-            file_put_contents('d:\1.txt', print_r($user->getPassword(), true));
             $form = $this->createForm(new UserType(), $user);
             $form->handleRequest($request);
             if ($form->isValid()) {
@@ -45,6 +41,8 @@ class UserController extends Controller
                 $em->persist($user);
                 $em->flush();
                 $this->addFlash('notice', 'Your changes were saved!');
+            } else {
+                $this->addFlash('notice', 'This username is already used/ @todo');
             }
         }
         return $this->redirect($this->generateUrl('dipsycat_fb_social_user_edit'), 301);
