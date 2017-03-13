@@ -1,8 +1,19 @@
 {% extends 'DipsycatAppBundle::base.html.twig' %}
 {% block stylesheets %}
-    {{  parent() }}
+    {{ parent() }}
     <link href="{{ asset('bundles/dipsycatfbsocial/dist/css/sb-admin-2.css') }}" rel="stylesheet">
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('bundles/dipsycatfbsocial/dist/js/sb-admin-2.js') }}"></script>
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div id="wrapper">
+        <div id="page-wrapper">
+            {% block wrapper %}
+
+            {% endblock %}
+        </div>
+    </div>
+
 {% endblock %}

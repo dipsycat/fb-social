@@ -15,12 +15,14 @@ class UserType extends AbstractType {
                     'label' => false,
                     'attr' => [
                         'placeholder' => 'Name',
+                        'class' => 'form-control'
                     ]
                 ])
                 ->add('surname', TextType::class, [
                     'label' => false,
                     'attr' => [
                         'placeholder' => 'SurName',
+                        'class' => 'form-control'
                     ]
         ]);
     }
