@@ -61,6 +61,15 @@ class User implements UserInterface {
      * )
      */
     private $userRoles;
+
+    /**
+     * @var ArrayCollection $userConversations
+     *
+     * @ORM\ManyToMany(targetEntity="Conversation", inversedBy="users")
+     * @ORM\JoinTable(name="user_conversations")
+     * )
+     */
+    private $userConversations;
     
     /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="myFriends")
@@ -83,6 +92,7 @@ class User implements UserInterface {
         $this->userRoles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->friendsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myFriends = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->userConversations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -297,5 +307,38 @@ class User implements UserInterface {
     public function getMyFriends()
     {
         return $this->myFriends;
+    }
+
+    /**
+     * Add userConversations
+     *
+     * @param \Dipsycat\FbSocialBundle\Entity\Conversation $userConversations
+     * @return User
+     */
+    public function addUserConversation(\Dipsycat\FbSocialBundle\Entity\Conversation $userConversations)
+    {
+        $this->userConversations[] = $userConversations;
+
+        return $this;
+    }
+
+    /**
+     * Remove userConversations
+     *
+     * @param \Dipsycat\FbSocialBundle\Entity\Conversation $userConversations
+     */
+    public function removeUserConversation(\Dipsycat\FbSocialBundle\Entity\Conversation $userConversations)
+    {
+        $this->userConversations->removeElement($userConversations);
+    }
+
+    /**
+     * Get userConversations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserConversations()
+    {
+        return $this->userConversations;
     }
 }

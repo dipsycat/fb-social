@@ -61,6 +61,15 @@ class User implements UserInterface {
      * )
      */
     private $userRoles;
+
+    /**
+     * @var ArrayCollection $userConversations
+     *
+     * @ORM\ManyToMany(targetEntity="Conversation", inversedBy="users")
+     * @ORM\JoinTable(name="conversations")
+     * )
+     */
+    private $userConversations;
     
     /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="myFriends")
@@ -81,6 +90,9 @@ class User implements UserInterface {
      */
     public function __construct() {
         $this->userRoles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->friendsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->myFriends = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->userConversations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -230,4 +242,103 @@ class User implements UserInterface {
         return $this->surname;
     }
 
+
+    /**
+     * Add friendsWithMe
+     *
+     * @param \Dipsycat\FbSocialBundle\Entity\User $friendsWithMe
+     * @return User
+     */
+    public function addFriendsWithMe(\Dipsycat\FbSocialBundle\Entity\User $friendsWithMe)
+    {
+        $this->friendsWithMe[] = $friendsWithMe;
+
+        return $this;
+    }
+
+    /**
+     * Remove friendsWithMe
+     *
+     * @param \Dipsycat\FbSocialBundle\Entity\User $friendsWithMe
+     */
+    public function removeFriendsWithMe(\Dipsycat\FbSocialBundle\Entity\User $friendsWithMe)
+    {
+        $this->friendsWithMe->removeElement($friendsWithMe);
+    }
+
+    /**
+     * Get friendsWithMe
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFriendsWithMe()
+    {
+        return $this->friendsWithMe;
+    }
+
+    /**
+     * Add myFriends
+     *
+     * @param \Dipsycat\FbSocialBundle\Entity\User $myFriends
+     * @return User
+     */
+    public function addMyFriend(\Dipsycat\FbSocialBundle\Entity\User $myFriends)
+    {
+        $this->myFriends[] = $myFriends;
+
+        return $this;
+    }
+
+    /**
+     * Remove myFriends
+     *
+     * @param \Dipsycat\FbSocialBundle\Entity\User $myFriends
+     */
+    public function removeMyFriend(\Dipsycat\FbSocialBundle\Entity\User $myFriends)
+    {
+        $this->myFriends->removeElement($myFriends);
+    }
+
+    /**
+     * Get myFriends
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMyFriends()
+    {
+        return $this->myFriends;
+    }
+
+    /**
+     * Add userConversations
+     *
+     * @param \Dipsycat\FbSocialBundle\Entity\Conversation $userConversations
+     * @return User
+     */
+    public function addUserConversation(\Dipsycat\FbSocialBundle\Entity\Conversation $userConversations)
+    {
+        $this->userConversations[] = $userConversations;
+
+        return $this;
+    }
+
+    /**
+     * Remove userConversations
+     *
+     * @param \Dipsycat\FbSocialBundle\Entity\Conversation $userConversations
+     */
+    public function removeUserConversation(\Dipsycat\FbSocialBundle\Entity\Conversation $userConversations)
+    {
+        $this->userConversations->removeElement($userConversations);
+    }
+
+    /**
+     * Get userConversations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserConversations()
+    {
+        return $this->userConversations;
+    }
 }
