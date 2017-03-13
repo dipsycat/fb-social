@@ -1,6 +1,5 @@
 Conversations
-{{ dump(app.user.userConversations) }}
-{{ dump(app.user) }}
 {% for conversation in app.user.userConversations %}
-    {{  conversation.name }}
+
+    <a href="{{ path('dipsycat_fb_social_conversation', { 'id': conversation.id }) }}">{{  conversation.name }}</a><br>
 {% endfor %}
