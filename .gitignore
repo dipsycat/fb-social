@@ -11,3 +11,5 @@
 /bin/
 /composer.phar
 /src/Dipsycat/AppBundle/Resources/public/
+.idea
+./idea

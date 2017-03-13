@@ -2,6 +2,7 @@
 
 namespace Dipsycat\FbSocialBundle\Controller;
 
+use Dipsycat\FbSocialBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 
@@ -14,10 +15,18 @@ class SecurityController extends Controller
         } else {
             $error = $this->get('request')->getSession()->get(SecurityContext::AUTHENTICATION_ERROR);
         }
- 
-        return $this->render('DipsycatFbSocialBundle:Security:login.html.twig', array(
-            'last_username' => $this->get('request')->getSession()->get(SecurityContext::LAST_USERNAME),
-            'error' => $error
-        ));
+
+        if(!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->render('DipsycatFbSocialBundle:Security:login.html.twig', array(
+                'last_username' => $this->get('request')->getSession()->get(SecurityContext::LAST_USERNAME),
+                'error' => $error
+            ));
+        } else {
+            return $this->render('DipsycatFbSocialBundle:Security:logout.html.twig', array(
+                'last_username' => $this->get('request')->getSession()->get(SecurityContext::LAST_USERNAME),
+                'error' => $error
+            ));
+        }
+
     }
 }
