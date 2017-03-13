@@ -22,4 +22,8 @@ dipsycat_fb_social_user_edit:
     
 dipsycat_fb_social_user_edit_post:
     path:  /edit_post
-    defaults: { _controller: DipsycatFbSocialBundle:User:postUserForm }    
+    defaults: { _controller: DipsycatFbSocialBundle:User:postUserForm }
+    
+dipsycat_fb_social_friend_list:
+    path:  /friends
+    defaults: { _controller: DipsycatFbSocialBundle:User:getFriends }    
