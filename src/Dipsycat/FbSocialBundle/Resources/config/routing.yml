@@ -26,4 +26,14 @@ dipsycat_fb_social_user_edit_post:
     
 dipsycat_fb_social_friend_list:
     path:  /friends
-    defaults: { _controller: DipsycatFbSocialBundle:User:getFriends }    
+    defaults: { _controller: DipsycatFbSocialBundle:User:getFriends }
+
+dipsycat_fb_social_conversation_list:
+    path:  /conversations
+    defaults: { _controller: DipsycatFbSocialBundle:Conversation:index }
+
+dipsycat_fb_social_conversation:
+    path:  /conversation/{id}
+    defaults: { _controller: DipsycatFbSocialBundle:Conversation:getConversation }
+    requirements:
+            id: '\d+'

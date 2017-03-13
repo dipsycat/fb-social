@@ -1,0 +1,6 @@
+Conversations
+{{ dump(app.user.userConversations) }}
+{{ dump(app.user) }}
+{% for conversation in app.user.userConversations %}
+    {{  conversation.name }}
+{% endfor %}
