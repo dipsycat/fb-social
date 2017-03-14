@@ -49,7 +49,6 @@
                         </ul>
                     </div>
                 </div>
-                <!-- /.panel-heading -->
                 <div class="panel-body">
                     <ul class="chat">
 
@@ -88,14 +87,14 @@
                     </ul>
                 </div>
                 <div class="panel-footer">
-                    <div class="input-group">
-                        <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                        <span class="input-group-btn">
-                            <button class="btn btn-warning btn-sm" id="btn-chat">
-                                Send
-                            </button>
-                        </span>
-                    </div>
+                    <form method="post" action="{{ path('dipsycat_fb_social_conversation_send_message', { 'id': conversation.id }) }}">
+                        <div class="input-group">
+                            <input id="btn-input" type="text" name="text" class="form-control input-sm" placeholder="Type your message here..." />
+                            <span class="input-group-btn">
+                                <input type="submit" value="Send" class="btn btn-warning btn-sm" id="btn-chat" />
+                            </span>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

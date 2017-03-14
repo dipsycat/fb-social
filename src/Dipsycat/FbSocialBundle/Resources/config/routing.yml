@@ -37,3 +37,9 @@ dipsycat_fb_social_conversation:
     defaults: { _controller: DipsycatFbSocialBundle:Conversation:getConversation }
     requirements:
             id: '\d+'
+            
+dipsycat_fb_social_conversation_send_message:
+    path:  /conversation/{id}/send
+    defaults: { _controller: DipsycatFbSocialBundle:Conversation:sendMessage }
+    requirements:
+            id: '\d+'

@@ -46,6 +46,10 @@ class Message
      */
     private $createdAt;
 
+    public function __construct() {
+        $this->setCreatedAt(new \DateTime('now'));
+    }
+    
     /**
      * Get id
      *
