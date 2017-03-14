@@ -1,5 +1,10 @@
-Conversations
-{% for conversation in app.user.userConversations %}
-
-    <a href="{{ path('dipsycat_fb_social_conversation', { 'id': conversation.id }) }}">{{  conversation.name }}</a><br>
-{% endfor %}
+{% extends 'DipsycatFbSocialBundle::layout.html.twig' %}
+{% block title %}
+    Conversations
+{% endblock %}
+{% block wrapper %}
+    {{ parent() }}
+    {% for conversation in app.user.userConversations %}
+        <a href="{{ path('dipsycat_fb_social_conversation', { 'id': conversation.id }) }}">{{  conversation.name }}</a><br>
+    {% endfor %}
+{% endblock %}

@@ -1,5 +1,13 @@
-<ul>
-{% for friend in friends %}
-    <li>{{ friend.username }}</li>
-{% endfor %}
-</ul>
+{% extends 'DipsycatFbSocialBundle::layout.html.twig' %}
+{% block title %}
+    Friends
+{% endblock %}
+{% block wrapper %}
+    {{ parent() }}
+    <ul>
+        {% for friend in friends %}
+            <li>{{ friend.username }}</li>
+            {% endfor %}
+    </ul>
+{% endblock %}
+
