@@ -53,6 +53,7 @@
                     <ul class="chat">
 
                         {% for message in conversation.messages %}
+                            {{ message.CreatedAtAgo }}
                             {% if message.user.id == app.user.id %}
                                 <li class="right clearfix">
                                     <span class="chat-img pull-right">

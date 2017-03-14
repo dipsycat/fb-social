@@ -151,4 +151,32 @@ class Message
     {
         return $this->conversation;
     }
+
+    public function getCreatedAtAgo() {
+        $now = new \DateTime('now');
+        $createdAt = $this->getCreatedAt();
+        $diff = $now->diff($createdAt);
+
+        $diff->w = floor($diff->d / 7);
+        $diff->d -= $diff->w * 7;
+
+        $period = array(
+            'y' => 'year',
+            'm' => 'month',
+            'w' => 'week',
+            'd' => 'day',
+            'h' => 'hour',
+            'i' => 'minute',
+            's' => 'second',
+        );
+        foreach ($period as $key => &$value) {
+            if ($diff->$key) {
+                $value = $diff->$key . ' ' . $value . ($diff->$key > 1 ? 's' : '');
+            } else {
+                unset($period[$key]);
+            }
+        }
+        $period = array_slice($period, 0, 1);
+        return $period ? implode(', ', $period) . ' ago' : 'just now';
+    }
 }
