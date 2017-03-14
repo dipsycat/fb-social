@@ -20,7 +20,6 @@ class Conversation
      */
     private $id;
 
-
     /**
      *
      * @var string name
@@ -28,11 +27,15 @@ class Conversation
      */
     private $name;
 
-
     /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="userConversations")
      */
     private $users;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="conversation")
+     */
+    private $messages;
 
     /**
      * Get id
@@ -80,5 +83,28 @@ class Conversation
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Conversation
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

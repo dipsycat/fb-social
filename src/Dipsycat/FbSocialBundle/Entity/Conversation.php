@@ -20,7 +20,6 @@ class Conversation
      */
     private $id;
 
-
     /**
      *
      * @var string name
@@ -28,11 +27,15 @@ class Conversation
      */
     private $name;
 
-
     /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="userConversations")
      */
     private $users;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="conversation")
+     */
+    private $messages;
 
     /**
      * Get id
@@ -103,5 +106,38 @@ class Conversation
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Add messages
+     *
+     * @param \Dipsycat\FbSocialBundle\Entity\Message $messages
+     * @return Conversation
+     */
+    public function addMessage(\Dipsycat\FbSocialBundle\Entity\Message $messages)
+    {
+        $this->messages[] = $messages;
+
+        return $this;
+    }
+
+    /**
+     * Remove messages
+     *
+     * @param \Dipsycat\FbSocialBundle\Entity\Message $messages
+     */
+    public function removeMessage(\Dipsycat\FbSocialBundle\Entity\Message $messages)
+    {
+        $this->messages->removeElement($messages);
+    }
+
+    /**
+     * Get messages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }
