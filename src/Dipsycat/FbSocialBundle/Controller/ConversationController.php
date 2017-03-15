@@ -12,6 +12,10 @@ class ConversationController extends Controller {
     public function indexAction() {
         return $this->render('DipsycatFbSocialBundle:Conversation:index.html.twig');
     }
+    
+    public function newAction() {
+        return $this->render('DipsycatFbSocialBundle:Conversation:new.html.twig');
+    }
 
     public function getConversationAction($id) {
         $user = $this->getUser();
