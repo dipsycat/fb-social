@@ -17,6 +17,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Dipsycat\FbSocialBundle\DipsycatFbSocialBundle(),
             new Dipsycat\AppBundle\DipsycatAppBundle(),
+            new Gos\Bundle\WebSocketBundle\GosWebSocketBundle(),
+            new Gos\Bundle\PubSubRouterBundle\GosPubSubRouterBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

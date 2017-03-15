@@ -64,7 +64,7 @@
                     </ul>
                 </div>
                 <div class="panel-footer">
-                    <form method="post" action="{{ path('dipsycat_fb_social_conversation_send_message', { 'id': conversation.id }) }}">
+                    <form method="post" action="{{ path('dipsycat_fb_social_conversation_send_message', { 'id': conversation.id }) }}" name="chat" id="chat">
                         <div class="input-group">
                             <input id="btn-input" type="text" name="text" class="form-control input-sm" placeholder="Type your message here..." />
                             <span class="input-group-btn">
@@ -76,4 +76,30 @@
             </div>
         </div>
     </div>
+
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/goswebsocket/js/gos_web_socket_client.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/goswebsocket/js/vendor/autobahn.min.js') }}"></script>
+    <script>
+        var webSocket = WS.connect("ws://127.0.0.1:3000");
+        webSocket.on("socket/connect", function(session){
+            console.log('connect to server');
+            session.subscribe("app/chat/habrchat/2", function(uri, payload){
+                console.log("Received message", payload.msg);
+            });
+
+            session.publish("app/chat/habrchat/2", "Привет, я пришел от клиента!!!");
+            $( "#chat" ).submit(function( event ) {
+                var message = $(this).find('#btn-input').val();
+                session.publish("app/chat/habrchat/2", message);
+                event.preventDefault();
+            });
+        });
+
+
+    </script>
 {% endblock %}
