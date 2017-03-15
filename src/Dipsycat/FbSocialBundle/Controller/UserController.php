@@ -48,7 +48,7 @@ class UserController extends Controller
         return $this->redirect($this->generateUrl('dipsycat_fb_social_user_edit'), 301);
     }
     
-    public function getFriendsAction(Request $request) {
+    public function getFriendsAction() {
         $user = $this->getUser();
         $friends = $user->getFriendsWithMe()->toArray();
         $friends = array_merge($friends, $user->getMyFriends()->toArray());

@@ -241,7 +241,13 @@ class User implements UserInterface {
     public function getSurname() {
         return $this->surname;
     }
-
+    
+    public function getAllFriends() {
+        $friendsWithMe = $this->getFriendsWithMe()->toArray();
+        $myFriends = $this->getMyFriends()->toArray();
+        $allFriends = array_merge($myFriends, $friendsWithMe);
+        return new \Doctrine\Common\Collections\ArrayCollection($allFriends);
+    }
 
     /**
      * Add friendsWithMe
