@@ -1,0 +1,46 @@
+{% extends 'DipsycatFbSocialBundle::layout.html.twig' %}
+{% block title %}
+    New Conversation
+{% endblock %}
+{% block wrapper %}
+    {{ parent() }}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">New Conversation</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {% for flash_message in app.session.flashBag.get('notice') %}
+                                <div class="flash-notice">
+                                    {{ flash_message }}
+                                </div>
+                            {% endfor %}
+                            <form method="post" action="{{ path('dipsycat_fb_social_conversation_new_post') }}">
+                                <div class="form-group">
+                                    <label>Name Conversation</label>
+                                    <input class="form-control" name="name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Add friends</label>
+                                    {% for friend in app.user.AllFriends %}
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="members[]" value="{{ friend.id }}">{{ friend.username }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <button type="submit" class="btn btn-default">Create</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

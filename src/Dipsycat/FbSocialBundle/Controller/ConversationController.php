@@ -6,11 +6,40 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Dipsycat\FbSocialBundle\Entity\Message;
 use Dipsycat\FbSocialBundle\Form\Type\MessageType;
+use Dipsycat\FbSocialBundle\Entity\Conversation;
 
 class ConversationController extends Controller {
 
     public function indexAction() {
         return $this->render('DipsycatFbSocialBundle:Conversation:index.html.twig');
+    }
+
+    public function newAction() {
+        return $this->render('DipsycatFbSocialBundle:Conversation:new.html.twig');
+    }
+
+    public function newPostAction(Request $request) {
+        if ($request->isMethod(Request::METHOD_POST)) {
+            $conversationName = $request->request->get('name');
+            $conversation = new Conversation();
+            $conversation->setName($conversationName);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($conversation);
+
+            $conversationMembers = $request->request->get('members');
+            $conversationMembers = array_merge($conversationMembers, [$this->getUser()->getId()]);
+            $userRepository = $em->getRepository('DipsycatFbSocialBundle:User');
+
+            foreach ($conversationMembers as $memberId) {
+                $user = $userRepository->find($memberId);
+                if (!empty($user)) {
+                    $user->addUserConversation($conversation);
+                    $em->persist($user);
+                }
+            }
+            $em->flush();
+        }
+        return $this->redirectToRoute('dipsycat_fb_social_conversation_list');
     }
 
     public function getConversationAction($id) {
@@ -52,4 +81,5 @@ class ConversationController extends Controller {
         }
         return $this->redirectToRoute('dipsycat_fb_social_conversation', array('id' => $conversation->getId()));
     }
+
 }

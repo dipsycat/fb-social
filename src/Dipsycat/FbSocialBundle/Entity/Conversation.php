@@ -9,8 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="Dipsycat\FbSocialBundle\Repository\ConversationRepository")
  */
-class Conversation
-{
+class Conversation {
+
     /**
      * @var int
      *
@@ -31,7 +31,7 @@ class Conversation
      * @ORM\ManyToMany(targetEntity="User", mappedBy="userConversations")
      */
     private $users;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Message", mappedBy="conversation")
      */
@@ -42,13 +42,11 @@ class Conversation
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
         $this->messages = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -59,8 +57,7 @@ class Conversation
      * @param \Dipsycat\FbSocialBundle\Entity\User $users
      * @return Conversation
      */
-    public function addUser(\Dipsycat\FbSocialBundle\Entity\User $users)
-    {
+    public function addUser(\Dipsycat\FbSocialBundle\Entity\User $users) {
         $this->users[] = $users;
 
         return $this;
@@ -71,8 +68,7 @@ class Conversation
      *
      * @param \Dipsycat\FbSocialBundle\Entity\User $users
      */
-    public function removeUser(\Dipsycat\FbSocialBundle\Entity\User $users)
-    {
+    public function removeUser(\Dipsycat\FbSocialBundle\Entity\User $users) {
         $this->users->removeElement($users);
     }
 
@@ -81,8 +77,7 @@ class Conversation
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getUsers()
-    {
+    public function getUsers() {
         return $this->users;
     }
 
@@ -92,8 +87,7 @@ class Conversation
      * @param string $name
      * @return Conversation
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -104,8 +98,7 @@ class Conversation
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -115,8 +108,7 @@ class Conversation
      * @param \Dipsycat\FbSocialBundle\Entity\Message $messages
      * @return Conversation
      */
-    public function addMessage(\Dipsycat\FbSocialBundle\Entity\Message $messages)
-    {
+    public function addMessage(\Dipsycat\FbSocialBundle\Entity\Message $messages) {
         $this->messages[] = $messages;
 
         return $this;
@@ -127,8 +119,7 @@ class Conversation
      *
      * @param \Dipsycat\FbSocialBundle\Entity\Message $messages
      */
-    public function removeMessage(\Dipsycat\FbSocialBundle\Entity\Message $messages)
-    {
+    public function removeMessage(\Dipsycat\FbSocialBundle\Entity\Message $messages) {
         $this->messages->removeElement($messages);
     }
 
@@ -137,8 +128,8 @@ class Conversation
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getMessages()
-    {
+    public function getMessages() {
         return $this->messages;
     }
+
 }

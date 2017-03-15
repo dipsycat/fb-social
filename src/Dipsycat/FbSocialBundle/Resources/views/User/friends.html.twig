@@ -5,6 +5,9 @@
 {% block wrapper %}
     {{ parent() }}
     <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Friends</h1>
+        </div>
         {% for friend in friends %}
             <div class="col-lg-3 col-md-4">
                 <div class="panel panel-red">
@@ -20,4 +23,3 @@
         {% endfor %}
     </div>
 {% endblock %}
-

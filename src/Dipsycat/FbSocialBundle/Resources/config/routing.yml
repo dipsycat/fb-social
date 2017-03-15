@@ -31,6 +31,14 @@ dipsycat_fb_social_friend_list:
 dipsycat_fb_social_conversation_list:
     path:  /conversations
     defaults: { _controller: DipsycatFbSocialBundle:Conversation:index }
+    
+dipsycat_fb_social_conversation_new:
+    path:  /conversation/new
+    defaults: { _controller: DipsycatFbSocialBundle:Conversation:new }
+    
+dipsycat_fb_social_conversation_new_post:
+    path:  /conversation/new_post
+    defaults: { _controller: DipsycatFbSocialBundle:Conversation:newPost }
 
 dipsycat_fb_social_conversation:
     path:  /conversation/{id}
