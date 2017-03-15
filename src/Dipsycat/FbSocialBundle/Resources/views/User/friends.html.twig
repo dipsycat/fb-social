@@ -4,10 +4,20 @@
 {% endblock %}
 {% block wrapper %}
     {{ parent() }}
-    <ul>
+    <div class="row">
         {% for friend in friends %}
-            <li>{{ friend.username }}</li>
-            {% endfor %}
-    </ul>
+            <div class="col-lg-3 col-md-4">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-9">
+                                <div class="huge">{{ friend.username }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
 
