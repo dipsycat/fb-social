@@ -8,28 +8,26 @@ use Dipsycat\FbSocialBundle\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class UserController extends Controller
-{
-    public function indexAction()
-    {
+class UserController extends Controller {
+
+    public function indexAction() {
         return $this->render('DipsycatFbSocialBundle:User:index.html.twig');
     }
-    
-    public function editAction()
-    {
+
+    public function editAction() {
         return $this->render('DipsycatFbSocialBundle:User:edit.html.twig');
     }
-    
+
     public function getUserFormAction(Request $request) {
         $user = new User();
         $form = $this->createForm(new UserType(), $user, [
             'action' => $this->generateUrl('dipsycat_fb_social_user_edit_post')
         ]);
         return $this->render('DipsycatFbSocialBundle:User:edit.html.twig', [
-            'form' => $form->createView()
+                    'form' => $form->createView()
         ]);
     }
-    
+
     public function postUserFormAction(Request $request) {
         $data = ['result' => 'error'];
         if ($request->isMethod(Request::METHOD_POST)) {
@@ -47,13 +45,14 @@ class UserController extends Controller
         }
         return $this->redirect($this->generateUrl('dipsycat_fb_social_user_edit'), 301);
     }
-    
+
     public function getFriendsAction() {
         $user = $this->getUser();
         $friends = $user->getFriendsWithMe()->toArray();
         $friends = array_merge($friends, $user->getMyFriends()->toArray());
         return $this->render('DipsycatFbSocialBundle:User:friends.html.twig', [
-            'friends' => $friends
+                    'friends' => $friends
         ]);
     }
+
 }

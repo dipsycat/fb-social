@@ -70,19 +70,19 @@ class User implements UserInterface {
      * )
      */
     private $userConversations;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="myFriends")
-     **/
+     * */
     private $friendsWithMe;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="friendsWithMe")
      * @ORM\JoinTable(name="friends",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="friend_user_id", referencedColumnName="id")}
      *      )
-     **/
+     * */
     private $myFriends;
 
     /**
@@ -241,7 +241,7 @@ class User implements UserInterface {
     public function getSurname() {
         return $this->surname;
     }
-    
+
     public function getAllFriends() {
         $friendsWithMe = $this->getFriendsWithMe()->toArray();
         $myFriends = $this->getMyFriends()->toArray();
@@ -255,8 +255,7 @@ class User implements UserInterface {
      * @param \Dipsycat\FbSocialBundle\Entity\User $friendsWithMe
      * @return User
      */
-    public function addFriendsWithMe(\Dipsycat\FbSocialBundle\Entity\User $friendsWithMe)
-    {
+    public function addFriendsWithMe(\Dipsycat\FbSocialBundle\Entity\User $friendsWithMe) {
         $this->friendsWithMe[] = $friendsWithMe;
 
         return $this;
@@ -267,8 +266,7 @@ class User implements UserInterface {
      *
      * @param \Dipsycat\FbSocialBundle\Entity\User $friendsWithMe
      */
-    public function removeFriendsWithMe(\Dipsycat\FbSocialBundle\Entity\User $friendsWithMe)
-    {
+    public function removeFriendsWithMe(\Dipsycat\FbSocialBundle\Entity\User $friendsWithMe) {
         $this->friendsWithMe->removeElement($friendsWithMe);
     }
 
@@ -277,8 +275,7 @@ class User implements UserInterface {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getFriendsWithMe()
-    {
+    public function getFriendsWithMe() {
         return $this->friendsWithMe;
     }
 
@@ -288,8 +285,7 @@ class User implements UserInterface {
      * @param \Dipsycat\FbSocialBundle\Entity\User $myFriends
      * @return User
      */
-    public function addMyFriend(\Dipsycat\FbSocialBundle\Entity\User $myFriends)
-    {
+    public function addMyFriend(\Dipsycat\FbSocialBundle\Entity\User $myFriends) {
         $this->myFriends[] = $myFriends;
 
         return $this;
@@ -300,8 +296,7 @@ class User implements UserInterface {
      *
      * @param \Dipsycat\FbSocialBundle\Entity\User $myFriends
      */
-    public function removeMyFriend(\Dipsycat\FbSocialBundle\Entity\User $myFriends)
-    {
+    public function removeMyFriend(\Dipsycat\FbSocialBundle\Entity\User $myFriends) {
         $this->myFriends->removeElement($myFriends);
     }
 
@@ -310,8 +305,7 @@ class User implements UserInterface {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getMyFriends()
-    {
+    public function getMyFriends() {
         return $this->myFriends;
     }
 
@@ -321,8 +315,7 @@ class User implements UserInterface {
      * @param \Dipsycat\FbSocialBundle\Entity\Conversation $userConversations
      * @return User
      */
-    public function addUserConversation(\Dipsycat\FbSocialBundle\Entity\Conversation $userConversations)
-    {
+    public function addUserConversation(\Dipsycat\FbSocialBundle\Entity\Conversation $userConversations) {
         $this->userConversations[] = $userConversations;
 
         return $this;
@@ -333,8 +326,7 @@ class User implements UserInterface {
      *
      * @param \Dipsycat\FbSocialBundle\Entity\Conversation $userConversations
      */
-    public function removeUserConversation(\Dipsycat\FbSocialBundle\Entity\Conversation $userConversations)
-    {
+    public function removeUserConversation(\Dipsycat\FbSocialBundle\Entity\Conversation $userConversations) {
         $this->userConversations->removeElement($userConversations);
     }
 
@@ -343,8 +335,8 @@ class User implements UserInterface {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getUserConversations()
-    {
+    public function getUserConversations() {
         return $this->userConversations;
     }
+
 }

@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="message")
  * @ORM\Entity(repositoryClass="Dipsycat\FbSocialBundle\Repository\MessageRepository")
  */
-class Message
-{
+class Message {
+
     /**
      * @var int
      *
@@ -20,25 +20,25 @@ class Message
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @var string text
      * @ORM\Column(type="string")
      */
     private $text;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Conversation", inversedBy="messages")
      * @ORM\JoinColumn(name="conversation_id", referencedColumnName="id")
      */
     private $conversation;
-    
+
     /**
      * @var DateTime $createdAt
      * 
@@ -49,14 +49,13 @@ class Message
     public function __construct() {
         $this->setCreatedAt(new \DateTime('now'));
     }
-    
+
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -66,8 +65,7 @@ class Message
      * @param string $text
      * @return Message
      */
-    public function setText($text)
-    {
+    public function setText($text) {
         $this->text = $text;
 
         return $this;
@@ -78,8 +76,7 @@ class Message
      *
      * @return string 
      */
-    public function getText()
-    {
+    public function getText() {
         return $this->text;
     }
 
@@ -89,8 +86,7 @@ class Message
      * @param \DateTime $createdAt
      * @return Message
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -101,8 +97,7 @@ class Message
      *
      * @return \DateTime 
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -112,8 +107,7 @@ class Message
      * @param \Dipsycat\FbSocialBundle\Entity\User $user
      * @return Message
      */
-    public function setUser(\Dipsycat\FbSocialBundle\Entity\User $user = null)
-    {
+    public function setUser(\Dipsycat\FbSocialBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -124,8 +118,7 @@ class Message
      *
      * @return \Dipsycat\FbSocialBundle\Entity\User 
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -135,8 +128,7 @@ class Message
      * @param \Dipsycat\FbSocialBundle\Entity\Conversation $conversation
      * @return Message
      */
-    public function setConversation(\Dipsycat\FbSocialBundle\Entity\Conversation $conversation = null)
-    {
+    public function setConversation(\Dipsycat\FbSocialBundle\Entity\Conversation $conversation = null) {
         $this->conversation = $conversation;
 
         return $this;
@@ -147,8 +139,7 @@ class Message
      *
      * @return \Dipsycat\FbSocialBundle\Entity\Conversation 
      */
-    public function getConversation()
-    {
+    public function getConversation() {
         return $this->conversation;
     }
 
@@ -179,4 +170,5 @@ class Message
         $period = array_slice($period, 0, 1);
         return $period ? implode(', ', $period) . ' ago' : 'just now';
     }
+
 }
