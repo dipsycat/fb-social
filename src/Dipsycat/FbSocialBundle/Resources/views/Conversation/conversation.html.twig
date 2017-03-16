@@ -77,25 +77,65 @@
         </div>
     </div>
 
-
-
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('bundles/goswebsocket/js/gos_web_socket_client.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/goswebsocket/js/vendor/autobahn.min.js') }}"></script>
     <script>
-        var webSocket = WS.connect("ws://127.0.0.1:3000");
-        webSocket.on("socket/connect", function(session){
-            console.log('connect to server');
-            session.subscribe("app/chat/habrchat/2", function(uri, payload){
-                console.log("Received message", payload.msg);
+        var webSocket = WS.connect("ws://fb-social.ru:8080");
+        webSocket.on("socket/connect", function (session) {
+            //console.log('connect to server');
+            session.subscribe("app/chat/habrchat/2", function (uri, payload) {
+                //console.log("Received message1", payload.msg);
+                //console.log("Received message1", payload.messages);
+                //console.log(payload.user);
+                //$.each(payload.messages, function (i, message) {
+                var message = payload.message;
+                if(message != undefined) {
+                    if(message.is_my_message) {
+                        $('ul.chat').append(
+                            '<li class = "right clearfix">' +
+                            '<span class = "chat-img pull-right">' +
+                            '<img src = "http://placehold.it/50/FA6F57/fff" alt = "User Avatar" class = "img-circle"/>' +
+                            '</span>' +
+                            '<div class = "chat-body clearfix">' +
+                            '<div class = "header">' +
+                            '<small class = " text-muted">' +
+                            '<i class = "fa fa-clock-o fa-fw"> </i>' + message.created_at + '</small>' +
+                            '<strong class = "pull-right primary-font" >' + message.username + '</strong>' +
+                            '</div>' +
+                            '<p>' + message.text + '</p>' +
+                            '</div>' +
+                            '</li>'
+                        );
+                    } else {
+                        $('ul.chat').append(
+                            '<li class = "left clearfix">' +
+                            '<span class = "chat-img pull-left">' +
+                            '<img src = "http://placehold.it/50/55C1E7/fff" alt = "User Avatar" class = "img-circle"/>' +
+                            '</span>' +
+                            '<div class = "chat-body clearfix">' +
+                            '<div class = "header">' +
+                            '<strong class = "pull-right primary-font" >' + message.username + '</strong>' +
+                            '<small class = " text-muted">' +
+                            '<i class = "fa fa-clock-o fa-fw"> </i>' + message.created_at + '</small>' +
+                            '</div>' +
+                            '<p>' + message.text + '</p>' +
+                            '</div>' +
+                            '</li>'
+                            );
+                        
+                    }
+                }
+                //});
+                //console.log(payload.msg);
             });
-
-            session.publish("app/chat/habrchat/2", "Привет, я пришел от клиента!!!");
-            $( "#chat" ).submit(function( event ) {
+            //session.publish("app/chat/habrchat/2", "Привет, я пришел от клиента!!!");
+            $("#chat").submit(function (event) {
                 var message = $(this).find('#btn-input').val();
                 session.publish("app/chat/habrchat/2", message);
+                $(this)[0].reset();
                 event.preventDefault();
             });
         });
