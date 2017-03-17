@@ -1,7 +1,7 @@
 app_topic_chat:
     channel: app/chat/{conversation}
     handler:
-        callback: 'app.topic.chat' #Относится к getName, а не к имени сервиса
+        callback: 'app.topic.chat'
     requirements:
         conversation:
             pattern: "\d+"

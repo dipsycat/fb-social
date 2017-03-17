@@ -31,7 +31,9 @@ class Chat implements TopicInterface {
 
     public function onPublish(ConnectionInterface $connection, Topic $topic, WampRequest $request, $event, array $exclude, array $eligible) {
         $conversationId = $request->getAttributes()->get('conversation');
-
+        if(empty($conversationId)) {
+            return;
+        }
         $client = $this->clientStorage->getClient($connection->WAMP->clientStorageId);
         if (!is_object($client)) {
             return;
