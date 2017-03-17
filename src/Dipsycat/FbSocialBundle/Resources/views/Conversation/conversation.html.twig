@@ -87,7 +87,6 @@
         webSocket.on("socket/connect", function (session) {
             var conversationId = {{ conversation.id }};
             var route = 'app/chat/' + conversationId + '';
-            console.log(conversationId);
             session.subscribe(route, function (uri, payload) {
                 if(payload.message != undefined) {
                     var message = payload.message;
