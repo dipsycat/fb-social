@@ -53,7 +53,7 @@
                                         <div class="header">
                                             <strong class="primary-font">{{ message.user.username }}</strong>
                                             <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 12 mins ago
+                                                <i class="fa fa-clock-o fa-fw"></i>{{ message.CreatedAtAgo }}
                                             </small>
                                         </div>
                                         <p>{{ message.text }}</p>
@@ -85,14 +85,12 @@
     <script>
         var webSocket = WS.connect("ws://fb-social.ru:8080");
         webSocket.on("socket/connect", function (session) {
-            //console.log('connect to server');
-            session.subscribe("app/chat/habrchat/2", function (uri, payload) {
-                //console.log("Received message1", payload.msg);
-                //console.log("Received message1", payload.messages);
-                //console.log(payload.user);
-                //$.each(payload.messages, function (i, message) {
-                var message = payload.message;
-                if(message != undefined) {
+            var conversationId = {{ conversation.id }};
+            var route = 'app/chat/' + conversationId + '';
+            console.log(conversationId);
+            session.subscribe(route, function (uri, payload) {
+                if(payload.message != undefined) {
+                    var message = payload.message;
                     if(message.is_my_message) {
                         $('ul.chat').append(
                             '<li class = "right clearfix">' +
@@ -128,18 +126,13 @@
                         
                     }
                 }
-                //});
-                //console.log(payload.msg);
             });
-            //session.publish("app/chat/habrchat/2", "Привет, я пришел от клиента!!!");
             $("#chat").submit(function (event) {
                 var message = $(this).find('#btn-input').val();
-                session.publish("app/chat/habrchat/2", message);
+                session.publish(route, message);
                 $(this)[0].reset();
                 event.preventDefault();
             });
         });
-
-
     </script>
 {% endblock %}

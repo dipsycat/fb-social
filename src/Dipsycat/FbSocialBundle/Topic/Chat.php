@@ -22,75 +22,58 @@ class Chat implements TopicInterface {
     }
 
     public function onSubscribe(ConnectionInterface $connection, Topic $topic, WampRequest $request) {
-        $room = $request->getAttributes()->get('room');
-        $userId = $request->getAttributes()->get('user_id');
-
-        $user = $this->token->getToken()->getUser();
-        $em = $this->doctrine->getManager();
-        $ConversationRepository = $em->getRepository('DipsycatFbSocialBundle:Conversation');
-        $Converstaion = $ConversationRepository->find(1);
-        $messages = [];
-        foreach ($Converstaion->getMessages() as $message) {
-            $isMyMessage = false;
-            if ($message->getUser()->getId() == $user->getId()) {
-                $isMyMessage = true;
-            }
-            $messages[] = [
-                'text' => $message->getText(),
-                'username' => $message->getUser()->getUsername(),
-                'created_at' => $message->getCreatedAtAgo(),
-                'is_my_message' => $isMyMessage
-            ];
-        }
-
-
-        //this will broadcast the message to ALL subscribers of this topic.
-        $topic->broadcast([
-            //'msg' => 'Новый пользователь зашел в комнату ' . $room . ' в личку к пользователю ' . $userId,
-            'msg' => '' . $room . ' в личку к пользователю ' . $userId,
-            //'msg' => $Converstaion->getMessages()->toArray(),
-            'messages' => $messages,
-            'user' => $user->getUsername(),
-            'message' => []
-        ]);
+        return;
     }
 
     public function onUnSubscribe(ConnectionInterface $connection, Topic $topic, WampRequest $request) {
-        $room = $request->getAttributes()->get('room');
-        $userId = $request->getAttributes()->get('user_id');
-        $topic->broadcast(['msg' => 'Новый пользователь вышел из комнаты ' . $room . ' лички с пользователем ' . $userId]);
+        return;
     }
 
     public function onPublish(ConnectionInterface $connection, Topic $topic, WampRequest $request, $event, array $exclude, array $eligible) {
-        $room = $request->getAttributes()->get('room');
-        $userId = $request->getAttributes()->get('user_id');
-        
-        $em = $this->doctrine->getManager();
-        $user = $this->token->getToken()->getUser();
+        $conversationId = $request->getAttributes()->get('conversation');
+
+        $client = $this->clientStorage->getClient($connection->WAMP->clientStorageId);
+        if (!is_object($client)) {
+            return;
+        }
+
         $Message = new \Dipsycat\FbSocialBundle\Entity\Message();
+        $em = $this->doctrine->getManager();
         $ConversationRepository = $em->getRepository('DipsycatFbSocialBundle:Conversation');
-        $Conversation = $ConversationRepository->find(1);
-        
-        //file_put_contents('d:\1.txt', print_r($Conversation->getId(), true), FILE_APPEND);
-        //file_put_contents('d:\1.txt', print_r($user->getId(), true), FILE_APPEND);
-        //file_put_contents('d:\1.txt', print_r($Message->getId(), true), FILE_APPEND);
-        $Message->setUser($user);
+        $Conversation = $ConversationRepository->find($conversationId);
+
+        $UserRepository = $em->getRepository('DipsycatFbSocialBundle:User');
+        $User = $UserRepository->find($client->getId());
+
+        $Message->setUser($User);
         $Message->setConversation($Conversation);
         $Message->setText($event);
-        
+
         $em->persist($Message);
         $em->flush();
-        
-        
-        $topic->broadcast([
-            'msg' => 'В комнату ' . $room . 'пользователю ' . $userId . ' поступило сообщение: ' . $event,
-            'message' => [
-                'text' => $event,
-                'username' => $user->getUsername(),
-                'created_at' => $Message->getCreatedAtAgo(),
-                'is_my_message' => true
-            ],
-        ]);
+
+        $message = [
+            'text' => $event,
+            'username' => $User->getUsername(),
+            'created_at' => $Message->getCreatedAtAgo(),
+            'is_my_message' => false
+        ];
+        $data = [
+            'message' => $message,
+        ];
+        $excluded = [
+            $connection->WAMP->sessionId
+        ];
+        $topic->broadcast($data, $excluded);
+
+        $message['is_my_message'] = true;
+        $data = [
+            'message' => $message,
+        ];
+        $recipients = [
+            $connection->WAMP->sessionId
+        ];
+        $topic->broadcast($data, [], $recipients);
     }
 
     public function getName() {
