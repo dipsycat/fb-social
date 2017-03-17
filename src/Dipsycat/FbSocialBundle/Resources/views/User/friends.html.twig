@@ -18,8 +18,35 @@
                             </div>
                         </div>
                     </div>
+                    <a href="{{ path('dipsycat_fb_social_friend_remove', {id: friend.id}) }}" class="remove-friend">
+                        <div class="panel-footer">
+                            <span class="pull-left">Remove</span>
+                            <span class="pull-right"><i class="fa fa-ban"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
                 </div>
             </div>
         {% endfor %}
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $('a.remove-friend').click(function (e) {
+                var href = $(this).attr('href');
+                $.ajax({
+                    url: href,
+                    type: "post",
+                    done: function (data) {
+                        //@todo
+                    },
+                });
+
+                e.preventDefault();
+            });
+        });
+    </script>
+
 {% endblock %}

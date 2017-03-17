@@ -24,7 +24,7 @@ class UserController extends Controller {
             'action' => $this->generateUrl('dipsycat_fb_social_user_edit_post')
         ]);
         return $this->render('DipsycatFbSocialBundle:User:edit.html.twig', [
-                    'form' => $form->createView()
+            'form' => $form->createView()
         ]);
     }
 
@@ -51,8 +51,35 @@ class UserController extends Controller {
         $friends = $user->getFriendsWithMe()->toArray();
         $friends = array_merge($friends, $user->getMyFriends()->toArray());
         return $this->render('DipsycatFbSocialBundle:User:friends.html.twig', [
-                    'friends' => $friends
+            'friends' => $friends
         ]);
+    }
+
+    public function removeFriendAction(Request $request, $id) {
+
+        $data = [
+            'result' => 'error'
+        ];
+        if ($request->isMethod(Request::METHOD_POST)) {
+            return new JsonResponse($data);
+        }
+
+
+        $em = $this->getDoctrine()->getManager();
+        $userRepository = $em->getRepository('DipsycatFbSocialBundle:User');
+        $friend = $userRepository->find($id);
+        $user = $this->getUser();
+        $user->removeMyFriend($friend);
+        $friend->removeMyFriend($user);
+        $em->persist($user);
+        $em->persist($friend);
+        $em->flush();
+        $data = [
+            'result' => 'success'
+        ];
+        return new JsonResponse($data);
+
+
     }
 
 }
