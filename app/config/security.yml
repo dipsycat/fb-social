@@ -19,9 +19,13 @@ security:
             logout: true
             security: true
             anonymous: true
+            knpu_guard:
+                authenticators:
+                    - app.facebook_authenticator
 
     access_control:
         - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /connect.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /.*, roles: ROLE_ADMIN }
         

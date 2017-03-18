@@ -55,3 +55,11 @@ dipsycat_fb_social_conversation_send_message:
     defaults: { _controller: DipsycatFbSocialBundle:Conversation:sendMessage }
     requirements:
             id: '\d+'
+
+connect_facebook:
+    path:  /connect/facebook
+    defaults: { _controller: DipsycatFbSocialBundle:FacebookAuth:connectFacebook }
+
+connect_facebook_check:
+    path:  /connect/facebook-check
+    defaults: { _controller: DipsycatFbSocialBundle:FacebookAuth:connectFacebookCheck }

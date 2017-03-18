@@ -11,8 +11,8 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
  * @ORM\Table(name="role")
  * @ORM\Entity(repositoryClass="Dipsycat\FbSocialBundle\Repository\RoleRepository")
  */
-class Role implements RoleInterface
-{
+class Role implements RoleInterface {
+
     /**
      * @var int
      *
@@ -21,20 +21,20 @@ class Role implements RoleInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @var string $name
      * @ORM\Column(type="string", length=255)
      */
     private $name;
-    
+
     /**
      * @var DateTime $createdAt
      * 
      * @ORM\Column(type="datetime", name="created_at")
      */
     private $createdAt;
-    
+
     function __construct() {
         $this->createdAt = new \DateTime();
     }
@@ -44,8 +44,7 @@ class Role implements RoleInterface
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -55,8 +54,7 @@ class Role implements RoleInterface
      * @param string $name
      * @return Role
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -67,8 +65,7 @@ class Role implements RoleInterface
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -78,8 +75,7 @@ class Role implements RoleInterface
      * @param \DateTime $createdAt
      * @return Role
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -90,11 +86,10 @@ class Role implements RoleInterface
      *
      * @return \DateTime 
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
-    
+
     public function getRole() {
         return $this->getName();
     }

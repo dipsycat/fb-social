@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Gos\Bundle\WebSocketBundle\GosWebSocketBundle(),
             new Gos\Bundle\PubSubRouterBundle\GosPubSubRouterBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new KnpU\GuardBundle\KnpUGuardBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

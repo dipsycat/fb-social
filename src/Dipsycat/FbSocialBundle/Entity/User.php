@@ -5,6 +5,7 @@ namespace Dipsycat\FbSocialBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -50,6 +51,14 @@ class User implements UserInterface {
      * @ORM\Column(type="string", length=255)
      */
     private $salt;
+
+    /**
+     *
+     * @var string facebookId
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Blank()
+     */
+    private $facebookId;
 
     /**
      * @var ArrayCollection $userRoles
@@ -339,4 +348,28 @@ class User implements UserInterface {
         return $this->userConversations;
     }
 
+
+    /**
+     * Set facebookId
+     *
+     * @param string $facebookId
+     *
+     * @return User
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+
+        return $this;
+    }
+
+    /**
+     * Get facebookId
+     *
+     * @return string
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
+    }
 }
