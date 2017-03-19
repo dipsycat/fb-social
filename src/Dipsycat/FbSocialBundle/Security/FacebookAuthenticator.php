@@ -85,7 +85,6 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator {
                 $Role = $RoleRepository->findOneBy(array('name' => 'ROLE_ADMIN'));
                 $User->addUserRole($Role);
 
-
                 $em->persist($User);
                 $em->flush();
             }
