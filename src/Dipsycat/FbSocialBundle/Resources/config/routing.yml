@@ -32,6 +32,11 @@ dipsycat_fb_social_friend_remove:
     path:  /friend/remove/{id}
     defaults: { _controller: DipsycatFbSocialBundle:User:removeFriend }
 
+dipsycat_fb_social_friend_search:
+    path:  /search
+    defaults: { _controller: DipsycatFbSocialBundle:User:searchUsers }
+
+
 dipsycat_fb_social_conversation_list:
     path:  /conversations
     defaults: { _controller: DipsycatFbSocialBundle:Conversation:index }

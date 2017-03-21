@@ -82,4 +82,10 @@ class UserController extends Controller {
 
     }
 
+    public function searchUsersAction(Request $request) {
+        $searchText = $request->get('search_text');
+        $sphinx = $this->get('iakumai.sphinxsearch.search');
+        return $sphinx->search($searchText, array('IndexName'));
+    }
+
 }
