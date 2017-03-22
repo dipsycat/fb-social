@@ -7,40 +7,29 @@
     <script src="{{ asset('bundles/dipsycatfbsocial/dist/js/sb-admin-2.js') }}"></script>
     <script>
         $('#search-btn').click(function () {
-            console.log('click');
-            $.ajax({
-                type: 'get',
-                url: '{{ path('dipsycat_fb_social_friend_search') }}',
-                data: $(this).serialize()
-            })
-                    .done(function (response) {
-                        if (response.result == 'success') {
-                            var users = response.data;
-                            for (var item in users) {
-                                console.log(users[item]);
-                            }
-                        }
-                    });
+
         });
         $('#search-text').keyup(function () {
-            console.log('keyup');
             var data = {
                 'search_text': $(this).val()
             };
-            $.ajax({
-                type: 'get',
-                url: '{{ path('dipsycat_fb_social_friend_search') }}',
-                data: data
-            })
-                    .done(function (response) {
-                        if (response.result == 'success') {
-                            var users = response.data;
-                            $('datalist#users').empty();
-                            for (var item in users) {
-                                $('datalist#users').append('<option value="' + users[item] + '"></option>');
+            if ($(this).val().length == 1) {
+                $.ajax({
+                    type: 'get',
+                    url: '{{ path('dipsycat_fb_social_friend_search') }}',
+                    data: data
+                })
+                        .done(function (response) {
+                            if (response.result == 'success') {
+                                var users = response.data;
+                                $('datalist#users').empty();
+                                for (var item in users) {
+                                    $('datalist#users').append('<option value="' + users[item] + '"></option>');
+                                }
                             }
-                        }
-                    });
+                        });
+            }
+
         });
     </script>
 {% endblock %}
@@ -203,7 +192,8 @@
                         <ul class="nav" id="side-menu">
                             <li class="sidebar-search">
                                 <div class="input-group custom-search-form">
-                                    <input id="search-text" type="text" list="users" class="form-control" placeholder="Search...">
+                                    <input id="search-text" type="text" list="users" class="form-control"
+                                           placeholder="Search...">
                                     <datalist id="users">
                                         <option value="admin"></option>
                                         <option value="admin1"></option>
