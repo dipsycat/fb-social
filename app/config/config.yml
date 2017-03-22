@@ -84,3 +84,14 @@ gos_web_socket:
         session_handler: @session.handler.pdo
     topics:
             - @app.topic.chat
+
+sphinxsearch:
+    searchd:
+        # Host name for your Sphinx daemon
+        host: localhost
+        # Port number for your Sphinx daemon
+        port: 9312
+        # If you want to connect via scoket
+        #socket: /path/to/socket.file
+    indexes:
+        IndexName: "DipsycatFbSocial:User"
