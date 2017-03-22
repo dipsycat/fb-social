@@ -24,7 +24,7 @@ class UserController extends Controller {
             'action' => $this->generateUrl('dipsycat_fb_social_user_edit_post')
         ]);
         return $this->render('DipsycatFbSocialBundle:User:edit.html.twig', [
-            'form' => $form->createView()
+                    'form' => $form->createView()
         ]);
     }
 
@@ -51,7 +51,7 @@ class UserController extends Controller {
         $friends = $user->getFriendsWithMe()->toArray();
         $friends = array_merge($friends, $user->getMyFriends()->toArray());
         return $this->render('DipsycatFbSocialBundle:User:friends.html.twig', [
-            'friends' => $friends
+                    'friends' => $friends
         ]);
     }
 
@@ -78,14 +78,27 @@ class UserController extends Controller {
             'result' => 'success'
         ];
         return new JsonResponse($data);
-
-
     }
 
     public function searchUsersAction(Request $request) {
-        $searchText = $request->get('search_text');
+
+        $searchText = $request->query->get('search_text');
         $sphinx = $this->get('iakumai.sphinxsearch.search');
-        return $sphinx->search($searchText, array('IndexName'));
+        $data = $sphinx->searchEx('*' . $searchText . '*', array('IndexName'));
+        $result = [
+            'result' => 'success'
+        ];
+        if (empty($data['matches'])) {
+            $result = [
+                'result' => 'error'
+            ];
+            return new JsonResponse($result);
+        }
+        foreach ($data['matches'] as $user) {
+            $entity = $user['entity'];
+            $result['data'][$entity->getId()] = $entity->getUsername();
+        }
+        return new JsonResponse($result);
     }
 
 }

@@ -94,4 +94,4 @@ sphinxsearch:
         # If you want to connect via scoket
         #socket: /path/to/socket.file
     indexes:
-        IndexName: "DipsycatFbSocial:User"
+        IndexName: "DipsycatFbSocialBundle:User"
