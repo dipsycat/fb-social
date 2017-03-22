@@ -5,33 +5,7 @@
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('bundles/dipsycatfbsocial/dist/js/sb-admin-2.js') }}"></script>
-    <script>
-        $('#search-btn').click(function () {
-
-        });
-        $('#search-text').keyup(function () {
-            var data = {
-                'search_text': $(this).val()
-            };
-            if ($(this).val().length == 1) {
-                $.ajax({
-                    type: 'get',
-                    url: '{{ path('dipsycat_fb_social_friend_search') }}',
-                    data: data
-                })
-                        .done(function (response) {
-                            if (response.result == 'success') {
-                                var users = response.data;
-                                $('datalist#users').empty();
-                                for (var item in users) {
-                                    $('datalist#users').append('<option value="' + users[item] + '"></option>');
-                                }
-                            }
-                        });
-            }
-
-        });
-    </script>
+    <script src="{{ asset('bundles/dipsycatfbsocial/dist/js/search.js') }}"></script>
 {% endblock %}
 {% block body %}
     {{ parent() }}

@@ -35,7 +35,8 @@ dipsycat_fb_social_friend_remove:
 dipsycat_fb_social_friend_search:
     path:  /search
     defaults: { _controller: DipsycatFbSocialBundle:User:searchUsers }
-
+    options:
+            expose: true
 
 dipsycat_fb_social_conversation_list:
     path:  /conversations

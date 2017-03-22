@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new KnpU\GuardBundle\KnpUGuardBundle(),
             new IAkumaI\SphinxsearchBundle\SphinxsearchBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
