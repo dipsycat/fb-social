@@ -1,0 +1,24 @@
+{
+  "name": "fb-social",
+  "version": "1.0.0",
+  "description": "Fb Social",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dipsycat/fb-social.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dipsycat/fb-social/issues"
+  },
+  "homepage": "https://github.com/dipsycat/fb-social#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglifyjs": "^0.6.2"
+  }
+}

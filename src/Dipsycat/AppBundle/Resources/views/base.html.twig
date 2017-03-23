@@ -13,11 +13,11 @@
         {% stylesheets 
         '@DipsycatAppBundle/Resources/public/bootstrap/dist/css/bootstrap.min.css' 
         '@DipsycatAppBundle/Resources/public/metisMenu/dist/metisMenu.min.css' 
-        '@DipsycatAppBundle/Resources/public/font-awesome/css/font-awesome.min.css' 
         filter='cssrewrite' 
         %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
+        <link href="{{ asset('bundles/dipsycatapp/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     {% block stylesheets %}{% endblock %}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
