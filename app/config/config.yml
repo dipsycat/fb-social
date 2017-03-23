@@ -95,3 +95,10 @@ sphinxsearch:
         #socket: /path/to/socket.file
     indexes:
         IndexName: "DipsycatFbSocialBundle:User"
+        
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    bundles: [DipsycatAppBundle, DipsycatFbSocialBundle]
+    filters:
+        cssrewrite: ~

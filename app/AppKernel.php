@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new KnpU\GuardBundle\KnpUGuardBundle(),
             new IAkumaI\SphinxsearchBundle\SphinxsearchBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
