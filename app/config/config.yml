@@ -78,12 +78,12 @@ gos_web_socket:
         host: 127.0.0.1   #The host ip to bind to
         router:
             resources:
-                - @DipsycatFbSocialBundle/Resources/config/pubsub/routing.yml
+                - "@DipsycatFbSocialBundle/Resources/config/pubsub/routing.yml"
     client:
         firewall: main
-        session_handler: @session.handler.pdo
+        session_handler: "@session.handler.pdo"
     topics:
-            - @app.topic.chat
+            - "@app.topic.chat"
 
 sphinxsearch:
     searchd:
