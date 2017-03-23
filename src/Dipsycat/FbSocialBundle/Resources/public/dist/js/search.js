@@ -1,7 +1,7 @@
 $('#search-btn').click(function () {
 
 });
-$('#search-text').keyup(function () {
+$('#search-text').keydown(function () {
     var url = Routing.generate('dipsycat_fb_social_friend_search');
     var data = {
         'search_text': $(this).val()
@@ -17,7 +17,7 @@ $('#search-text').keyup(function () {
                     var users = response.data;
                     $('datalist#users').empty();
                     for (var item in users) {
-                        $('datalist#users').append('<option value="' + users[item] + '"></option>');
+                        $('datalist#users').append('<option data-id="' + item + '" value="' + users[item] + '"></option>');
                     }
                 }
             });
