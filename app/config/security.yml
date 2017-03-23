@@ -16,7 +16,12 @@ security:
             form_login:
                 check_path: /login_check
                 login_path: /login
-            logout: true
+                always_use_default_target_path: true
+                default_target_path: /
+            logout:
+                path: /logout
+                invalidate_session: false
+                target: /
             security: true
             anonymous: true
             knpu_guard:

@@ -21,11 +21,7 @@ class SecurityController extends Controller {
                         'error' => $error
             ));
         } else {
-            return $this->render('DipsycatFbSocialBundle:Security:logout.html.twig', array(
-                        'last_username' => $this->get('request')->getSession()->get(SecurityContext::LAST_USERNAME),
-                        'error' => $error
-            ));
+            return $this->redirectToRoute('dipsycat_fb_social_homepage');
         }
     }
-
 }
