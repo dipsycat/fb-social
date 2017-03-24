@@ -25,11 +25,11 @@ gulp.task('fbsocial-css', function () {
 
 gulp.task('app-js', function () {
     return gulp.src([
-        'src/Dipsycat/FbSocialBundle/Resources/private/**/*.js',
         'src/Dipsycat/AppBundle/Resources/private/jquery/dist/jquery.min.js',
         'src/Dipsycat/AppBundle/Resources/private/bootstrap/dist/js/bootstrap.min.js',
         'src/Dipsycat/AppBundle/Resources/private/metisMenu/dist/metisMenu.min.js',
-        'vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.js'
+        'vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.js',
+        'src/Dipsycat/FbSocialBundle/Resources/private/**/*.js'
     ])
         .pipe(concat('app.min.js'))
         .pipe(uglify())

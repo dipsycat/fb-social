@@ -1,15 +1,11 @@
 {
   "name": "fb-social",
-  "homepage": "http://startbootstrap.com/template-overviews/sb-admin-2/",
-  "version": "3.3.7+1",
+  "homepage": "https://github.com/dipsycat/fb-social#readme",
+  "version": "1.0.0",
   "authors": [
-    "Max S"
+    "Max Sapronenkov"
   ],
-  "description": "A free, open source, Bootstrap admin theme created by Start Bootstrap",
-  "keywords": [
-    "bootstrap",
-    "theme"
-  ],
+  "description": "",
   "license": "MIT",
   "ignore": [
     "**/.*",
@@ -21,7 +17,6 @@
     "index.html",
     "/js"
   ],
-
   "dependencies": {
     "bootstrap": "~3.3.7",
     "datatables": "~1.10.4",
