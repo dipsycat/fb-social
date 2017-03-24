@@ -1,11 +1,19 @@
 {% extends 'DipsycatAppBundle::base.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('bundles/dipsycatfbsocial/dist/css/sb-admin-2.css') }}" rel="stylesheet">
+    {% stylesheets 
+        '@DipsycatFbSocialBundle/Resources/public/css/fbsocial.min.css'
+        filter='cssrewrite' 
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset('bundles/dipsycatfbsocial/dist/js/sb-admin-2.js') }}"></script>
-    <script src="{{ asset('bundles/dipsycatfbsocial/dist/js/search.js') }}"></script>
+    {% javascripts 
+        '@DipsycatFbSocialBundle/Resources/public/js/fbsocial.min.js' 
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
 {% block body %}
     {{ parent() }}
@@ -169,7 +177,7 @@
                                     <input id="search-text" type="text" list="users" class="form-control"
                                            placeholder="Search...">
                                     <datalist id="users">
-                                        
+
                                     </datalist>
                                     <span class="input-group-btn">
                                         <button id="add-btn" class="btn btn-default" type="button" title="Add to friends">

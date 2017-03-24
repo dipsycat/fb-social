@@ -80,8 +80,12 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/goswebsocket/js/gos_web_socket_client.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/goswebsocket/js/vendor/autobahn.min.js') }}"></script>
+    {% javascripts 
+        '@GosWebSocketBundle/Resources/public/js/gos_web_socket_client.js' 
+        '@GosWebSocketBundle/Resources/public/js/vendor/autobahn.min.js' 
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
     <script>
         var webSocket = WS.connect("ws://fb-social.ru:8080");
         webSocket.on("socket/connect", function (session) {
