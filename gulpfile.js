@@ -4,10 +4,6 @@ var gulp = require('gulp'),
     cleanCSS = require('gulp-clean-css'),
     concatCss = require('gulp-concat-css');
 
-gulp.task('mytask', function () {
-    console.log('Привет, я таск!');
-});
-
 gulp.task('app-css', function () {
     return gulp.src([
         'src/Dipsycat/AppBundle/Resources/private/bootstrap/dist/css/bootstrap.min.css',
@@ -26,7 +22,6 @@ gulp.task('fbsocial-css', function () {
         .pipe(cleanCSS({compatibility: 'ie8'}))
         .pipe(gulp.dest('src/Dipsycat/FbSocialBundle/Resources/public/css'));
 });
-
 
 gulp.task('app-js', function () {
     return gulp.src([
@@ -48,4 +43,9 @@ gulp.task('fbsocial-js', function () {
         .pipe(concat('fbsocial.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('src/Dipsycat/FbSocialBundle/Resources/public/js'));
+});
+
+gulp.task('watch', function() {
+    gulp.watch('src/**/*.css', ['app-css', 'fbsocial-css']);
+    gulp.watch('src/**/*.js', ['app-js', 'fbsocial-js']);
 });

@@ -9,7 +9,7 @@
 /build/
 /vendor/
 /bin/
+/node_modules/
 /composer.phar
-/src/Dipsycat/AppBundle/Resources/public/
 .idea
 ./idea
