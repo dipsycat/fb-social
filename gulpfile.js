@@ -49,3 +49,9 @@ gulp.task('watch', function() {
     gulp.watch('src/**/*.css', ['app-css', 'fbsocial-css']);
     gulp.watch('src/**/*.js', ['app-js', 'fbsocial-js']);
 });
+
+gulp.task('build', ['app-css', 'fbsocial-css', 'app-js', 'fbsocial-js']);
+
+gulp.task('clear', function () {
+    return cache.clearAll();
+});
