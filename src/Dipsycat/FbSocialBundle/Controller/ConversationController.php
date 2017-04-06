@@ -81,5 +81,9 @@ class ConversationController extends Controller {
         }
         return $this->redirectToRoute('dipsycat_fb_social_conversation', array('id' => $conversation->getId()));
     }
+    
+    public function editMessageAction(Request $request, $id) {
+        
+    }
 
 }
