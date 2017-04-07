@@ -2,3 +2,7 @@ services:
     app.topic.chat:
         class: Dipsycat\FbSocialBundle\Topic\Chat
         arguments: ["@doctrine", "@security.token_storage", "@gos_web_socket.client_storage"]
+        
+    app.uploader:
+        class: Dipsycat\FbSocialBundle\Services\Uploader
+        arguments: ['%kernel.root_dir%/../web/uploads']

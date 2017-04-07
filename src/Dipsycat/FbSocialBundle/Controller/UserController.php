@@ -38,6 +38,10 @@ class UserController extends Controller {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
+                
+                $Uploader = $this->get('app.uploader');
+                $fileName = $Uploader->uploadFile($user->getAvatar());
+                $user->setAvatarPath($fileName);
                 $em->persist($user);
                 $em->flush();
                 $this->addFlash('notice', 'Your changes were saved!');
