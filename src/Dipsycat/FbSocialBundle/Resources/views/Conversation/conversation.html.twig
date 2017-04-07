@@ -45,7 +45,7 @@
                                         </div>
                                         <p class="message-text">{{ message.text }}</p>
                                         <form class="form-edit-message" style="display:none;" method="post" action="{{ path('dipsycat_fb_social_conversation_message_edit', { 'id': message.id }) }}"> 
-                                            <textarea class="form-control"></textarea>
+                                            <textarea class="form-control" name="new-message"></textarea>
                                             <button type="submit" class="btn btn-success">Submit</button>
                                         </form>
                                     </div>
@@ -144,19 +144,32 @@
                 event.preventDefault();
             });
         });
-        $('.edit-message').click(function(e) {
+        $('.edit-message').click(function (e) {
             $('.form-edit-message').hide();
             e.preventDefault();
             var chat = $(this).closest('.chat-body');
-            var message = chat.find('.message-text').text();
-            chat.find('.message-text').hide();
+            var message = chat.find('.message-text');
+            message.hide();
             var formEditMessage = chat.find('.form-edit-message');
-            formEditMessage.find('textarea').val(message);
+            formEditMessage.find('textarea').val(message.text());
             $(this).closest('.chat-body').find('.form-edit-message').show();
         });
-        $('.form-edit-message').submit(function(e) {
+        $('.form-edit-message').submit(function (e) {
             e.preventDefault();
-            console.log('submit');
+            var chat = $(this).closest('.chat-body');
+            var message = chat.find('.message-text');
+            $.ajax({
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                data: $(this).serialize()
+            })
+                    .done(function (data) {
+                        if (data.result == 'success') {
+                            message.text(data.message);
+                        }
+                        message.show();
+                        $('.form-edit-message').hide();
+                    })
         });
     </script>
 {% endblock %}

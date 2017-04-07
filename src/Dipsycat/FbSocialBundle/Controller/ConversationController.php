@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Dipsycat\FbSocialBundle\Entity\Message;
 use Dipsycat\FbSocialBundle\Form\Type\MessageType;
 use Dipsycat\FbSocialBundle\Entity\Conversation;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ConversationController extends Controller {
 
@@ -81,9 +82,39 @@ class ConversationController extends Controller {
         }
         return $this->redirectToRoute('dipsycat_fb_social_conversation', array('id' => $conversation->getId()));
     }
-    
+
     public function editMessageAction(Request $request, $id) {
-        
+        if (!$request->isMethod(Request::METHOD_POST)) {
+            return;
+        }
+        $em = $this->getDoctrine()->getManager();
+        $messageRepository = $em->getRepository('DipsycatFbSocialBundle:Message');
+        $message = $messageRepository->find($id);
+        $data = [
+            'result' => 'success'
+        ];
+        if ($this->getUser()->getId() != $message->getUser()->getId()) {
+            $data = [
+                'result' => 'error'
+            ];
+            return new JsonResponse([
+                'data' => $data
+            ]);
+        }
+        $messageText = $request->get('new-message');
+        if (empty($messageText)) {
+            $data = [
+                'result' => 'error'
+            ];
+            return new JsonResponse([
+                'data' => $data
+            ]);
+        }
+        $message->setText($messageText);
+        $em->persist($message);
+        $em->flush();
+        $data['message'] = $message->getText();
+        return new JsonResponse($data);
     }
 
 }
