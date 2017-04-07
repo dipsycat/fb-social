@@ -16,7 +16,8 @@ gulp.task('app-css', function () {
 
 gulp.task('fbsocial-css', function () {
     return gulp.src([
-        'src/Dipsycat/FbSocialBundle/Resources/private/css/sb-admin-2.css'
+        'src/Dipsycat/FbSocialBundle/Resources/private/css/sb-admin-2.css',
+        'src/Dipsycat/FbSocialBundle/Resources/private/css/main.css'
     ])
         .pipe(concatCss('fbsocial.min.css'))
         .pipe(cleanCSS({compatibility: 'ie8'}))
