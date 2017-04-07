@@ -45,8 +45,9 @@
                                         </div>
                                         <p class="message-text">{{ message.text }}</p>
                                         <form class="form-edit-message" style="display:none;" method="post" action="{{ path('dipsycat_fb_social_conversation_message_edit', { 'id': message.id }) }}"> 
-                                            <textarea class="form-control" name="new-message"></textarea>
+                                            <textarea class="form-control" name="new-message" required="required"></textarea>
                                             <button type="submit" class="btn btn-success">Submit</button>
+                                            <button type="button" class="btn btn-danger cancel">Cancel</button>
                                         </form>
                                     </div>
                                 </li>
@@ -170,6 +171,11 @@
                         message.show();
                         $('.form-edit-message').hide();
                     })
+        });
+        $('button.cancel').click(function() {
+            var formEdit = $(this).closest('.form-edit-message');
+            formEdit.hide();
+            formEdit.parent().find('.message-text').show();
         });
     </script>
 {% endblock %}
