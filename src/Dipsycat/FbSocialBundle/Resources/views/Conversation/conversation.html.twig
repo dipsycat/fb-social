@@ -170,6 +170,7 @@
             $('.form-edit-message').hide();
             e.preventDefault();
             var chat = $(this).closest('.chat-body');
+            $('.chat').find('.message-text').show();
             var message = chat.find('.message-text');
             message.hide();
             var formEditMessage = chat.find('.form-edit-message');
