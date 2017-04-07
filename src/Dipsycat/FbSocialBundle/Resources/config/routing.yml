@@ -61,6 +61,12 @@ dipsycat_fb_social_conversation_send_message:
     defaults: { _controller: DipsycatFbSocialBundle:Conversation:sendMessage }
     requirements:
             id: '\d+'
+            
+dipsycat_fb_social_conversation_message_edit:
+    path:  /conversation/message/edit/{id}
+    defaults: { _controller: DipsycatFbSocialBundle:Conversation:editMessage }
+    requirements:
+            id: '\d+'
 
 connect_facebook:
     path:  /connect/facebook
