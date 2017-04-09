@@ -62,7 +62,7 @@ class User implements UserInterface {
 
     /**
      * @var ArrayCollection $userRoles
-     * 
+     *
      * @ORM\ManyToMany(targetEntity="Role")
      * @ORM\JoinTable(name="user_role",
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
@@ -95,6 +95,12 @@ class User implements UserInterface {
     private $myFriends;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
+
+    /**
      * Constructor
      */
     public function __construct() {
@@ -107,7 +113,7 @@ class User implements UserInterface {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId() {
         return $this->id;
@@ -128,7 +134,7 @@ class User implements UserInterface {
     /**
      * Get username
      *
-     * @return string 
+     * @return string
      */
     public function getUsername() {
         return $this->username;
@@ -149,7 +155,7 @@ class User implements UserInterface {
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword() {
         return $this->password;
@@ -170,7 +176,7 @@ class User implements UserInterface {
     /**
      * Get salt
      *
-     * @return string 
+     * @return string
      */
     public function getSalt() {
         return $this->salt;
@@ -200,7 +206,7 @@ class User implements UserInterface {
     /**
      * Get userRoles
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUserRoles() {
         return $this->userRoles;
@@ -245,7 +251,7 @@ class User implements UserInterface {
     /**
      * Get surname
      *
-     * @return string 
+     * @return string
      */
     public function getSurname() {
         return $this->surname;
@@ -282,7 +288,7 @@ class User implements UserInterface {
     /**
      * Get friendsWithMe
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getFriendsWithMe() {
         return $this->friendsWithMe;
@@ -312,7 +318,7 @@ class User implements UserInterface {
     /**
      * Get myFriends
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMyFriends() {
         return $this->myFriends;
@@ -342,7 +348,7 @@ class User implements UserInterface {
     /**
      * Get userConversations
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUserConversations() {
         return $this->userConversations;
@@ -356,8 +362,7 @@ class User implements UserInterface {
      *
      * @return User
      */
-    public function setFacebookId($facebookId)
-    {
+    public function setFacebookId($facebookId) {
         $this->facebookId = $facebookId;
 
         return $this;
@@ -368,8 +373,15 @@ class User implements UserInterface {
      *
      * @return string
      */
-    public function getFacebookId()
-    {
+    public function getFacebookId() {
         return $this->facebookId;
+    }
+
+    public function getPlainPassword() {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password) {
+        $this->plainPassword = $password;
     }
 }

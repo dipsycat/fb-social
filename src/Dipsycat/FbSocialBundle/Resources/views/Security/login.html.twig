@@ -18,6 +18,11 @@
                                 {{ error.message }}
                             </div>
                         {% endif %}
+                        {% for flash_message in app.session.flashBag.get('notice') %}
+                            <div class="flash-notice alert alert-success alert-dismissable">
+                                {{ flash_message }}
+                            </div>
+                        {% endfor %}
                         <form action="{{ path('_security_check') }}" method="POST" role="form">
                             <fieldset>
                                 <div class="form-group">
@@ -37,6 +42,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row text-center">
+            <a href="{{ path('dipsycat_fb_social_user_registration') }}">Registration</a>
         </div>
         <div class="row text-center">
             <a href="{{ path('connect_facebook') }}">Login with Facebook</a>

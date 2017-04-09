@@ -31,6 +31,7 @@ security:
     access_control:
         - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /connect.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/css, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/js, role: IS_AUTHENTICATED_ANONYMOUSLY }
