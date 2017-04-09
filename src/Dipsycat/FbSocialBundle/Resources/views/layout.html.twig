@@ -3,7 +3,7 @@
     {{ parent() }}
     {% stylesheets 
         '@DipsycatFbSocialBundle/Resources/public/css/fbsocial.min.css'
-        filter='cssrewrite' 
+        filter='cssrewrite'
     %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
@@ -28,7 +28,9 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ path('dipsycat_fb_social_homepage') }}">Fb Social</a>
+                    <a class="navbar-brand" href="{{ path('dipsycat_fb_social_homepage') }}">
+                        Fb Social / {{ app.user.username }}
+                    </a>
                 </div>
 
                 <ul class="nav navbar-top-links navbar-right">

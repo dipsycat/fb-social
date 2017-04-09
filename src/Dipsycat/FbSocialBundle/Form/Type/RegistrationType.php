@@ -19,7 +19,8 @@ class RegistrationType extends AbstractType {
                 'attr' => [
                     'placeholder' => 'Name',
                     'class' => 'form-control'
-                ]
+                ],
+                'invalid_message' => 'This username already is used',
             ])
             ->add('surname', TextType::class, [
                 'label' => false,
