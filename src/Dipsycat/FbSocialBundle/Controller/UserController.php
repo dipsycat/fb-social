@@ -2,6 +2,7 @@
 
 namespace Dipsycat\FbSocialBundle\Controller;
 
+use Dipsycat\FbSocialBundle\Form\Type\RegistrationType;
 use IAkumaI\SphinxsearchBundle\Exception\EmptyIndexException;
 use IAkumaI\SphinxsearchBundle\Exception\NoSphinxAPIException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -9,6 +10,7 @@ use Dipsycat\FbSocialBundle\Entity\User;
 use Dipsycat\FbSocialBundle\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller {
 
@@ -130,6 +132,43 @@ class UserController extends Controller {
             $result[$user->getId()] = $user->getUsername();
         }
         return $result;
+    }
+
+    public function registrationUserAction(Request $request) {
+        $user = new User();
+        $form = $this->createForm(new RegistrationType(), $user, [
+            'action' => $this->generateUrl('dipsycat_fb_social_user_registration')
+        ]);
+        $form->handleRequest($request);
+        $error = [];
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $salt = hash('md5', time());
+            $user->setSalt($salt);
+            $password = $this->get('security.password_encoder')
+                ->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+            $roleRepository = $em->getRepository('DipsycatFbSocialBundle:Role');
+            $role = $roleRepository->findOneBy([
+                'name' => 'ROLE_ADMIN'
+            ]);
+            $user->addUserRole($role);
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash(
+                'notice',
+                'Your account was registrated. Please log in'
+            );
+
+            return $this->redirectToRoute('_security_login');
+        } else {
+            $error = $form->getErrors();
+        }
+
+        return $this->render('DipsycatFbSocialBundle:User:registration.html.twig', [
+            'form' => $form->createView(),
+            'error' => $error
+        ]);
     }
 
 }

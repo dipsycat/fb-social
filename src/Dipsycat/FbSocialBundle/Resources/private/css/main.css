@@ -4,3 +4,12 @@
     background-color: rgba(0, 0, 0, 0.1);
     margin-top: 10px;
 }
+
+form div ul li  {
+    list-style-type: none;
+    padding-left: 10px;
+}
+
+form div ul  {
+    padding-left: 10px;
+}
