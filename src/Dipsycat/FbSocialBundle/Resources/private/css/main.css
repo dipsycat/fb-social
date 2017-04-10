@@ -5,12 +5,12 @@
     margin-top: 10px;
 }
 
-form div ul li  {
+.alert {
     list-style-type: none;
     padding-left: 10px;
 }
 
-form div ul  {
+.alert-list {
     padding-left: 10px;
 }
 

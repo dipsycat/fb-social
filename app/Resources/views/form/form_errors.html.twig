@@ -2,7 +2,7 @@
 {% block form_errors %}
     {% spaceless %}
         {% if errors|length > 0 %}
-            <ul>
+            <ul class="alert-list">
                 {% for error in errors %}
                    <li class="alert alert-danger alert-dismissable">{{ error.message }}</li>
                 {% endfor %}
