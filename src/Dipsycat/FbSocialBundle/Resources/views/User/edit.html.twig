@@ -33,7 +33,9 @@
                                 </div>    
                             </div>    
                             {{ form_widget(form) }}
-                            <img id="downloadedImage" src="#" alt="" />
+                            <div class="form-group">
+                                <img id="downloaded-image" class="img-responsive" src="{{ asset(app.user.avatarPath) }}" alt="" />
+                            </div>
                             <button type="submit" class="btn btn-default">Save</button>
                             {{ form_end(form) }}
                         </div>
@@ -54,7 +56,7 @@
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    $('#downloadedImage').attr('src', e.target.result);
+                    $('#downloaded-image').attr('src', e.target.result);
                 }
 
                 reader.readAsDataURL(input.files[0]);
