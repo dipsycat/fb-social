@@ -4,9 +4,13 @@ namespace Dipsycat\FbSocialBundle\Form\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class ImageTypeExtension extends \Symfony\Component\Form\AbstractTypeExtension {
+class ImageType extends \Symfony\Component\Form\AbstractType {
     
     public function getExtendedType() {
+        return FileType::class;
+    }
+    
+    public function getParent() {
         return FileType::class;
     }
 
@@ -24,7 +28,6 @@ class ImageTypeExtension extends \Symfony\Component\Form\AbstractTypeExtension {
                 $imageUrl = $accessor->getValue($parentData, $options['image_path']);
             }
 
-            // set an "image_url" variable that will be available when rendering this field
             $view->vars['image_url'] = $imageUrl;
         }
     }

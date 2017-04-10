@@ -26,15 +26,7 @@ class UserType extends AbstractType {
                         'class' => 'form-control'
                     ]
                 ])
-                ->add('avatar', FileType::class, [
-                    'label' => false,
-                    'attr' => [
-                        //'placeholder' => 'SurName',
-                        'class' => 'form-control'
-                    ],
-                    'image_path' => 'avatarPath'
-                ])
-                ->add('avatar', FileType::class, [
+                ->add('avatar', ImageType::class, [
                     'label' => false,
                     'attr' => [
                         'class' => 'form-control'
