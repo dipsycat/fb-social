@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new IAkumaI\SphinxsearchBundle\SphinxsearchBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

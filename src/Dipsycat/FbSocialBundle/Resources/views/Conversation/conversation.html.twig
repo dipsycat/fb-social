@@ -28,7 +28,12 @@
                             {% if message.user.id == app.user.id %}
                                 <li class="right clearfix">
                                     <span class="chat-img pull-right">
-                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+                                        {% set image_url = message.user.avatarPath %}
+                                        {% if image_url is not empty %}
+                                            <img src="{{ asset(message.user.avatarPath) | imagine_filter('my_thumb') }}" alt="User Avatar" class="img-circle" />
+                                        {% else %}
+                                            <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+                                        {% endif %}
                                     </span>
                                     <div class="chat-body clearfix">
                                         <div class="header">
@@ -49,7 +54,12 @@
                             {% else %}
                                 <li class="left clearfix">
                                     <span class="chat-img pull-left">
-                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+                                        {% set image_url = message.user.avatarPath %}
+                                        {% if image_url is not empty %}
+                                            <img src="{{ asset(message.user.avatarPath) | imagine_filter('my_thumb') }}" alt="User Avatar" class="img-circle" />
+                                        {% else %}
+                                            <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+                                        {% endif %}
                                     </span>
                                     <div class="chat-body clearfix">
                                         <div class="header">
