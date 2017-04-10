@@ -37,6 +37,9 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form:
+        resources:
+            - 'DipsycatFbSocialBundle:Form:image_widget.html.twig'
 
 # Doctrine Configuration
 doctrine:

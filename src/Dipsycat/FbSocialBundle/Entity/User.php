@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * User
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Dipsycat\FbSocialBundle\Repository\UserRepository")
  * @UniqueEntity("username")
  */
-class User implements UserInterface {
+class User implements UserInterface, \Serializable {
 
     /**
      * @var int
@@ -93,6 +94,24 @@ class User implements UserInterface {
      *      )
      * */
     private $myFriends;
+    
+    /**
+     * @Assert\File(maxSize = "5M")
+     * @Assert\Image(
+     *      maxSize = "5M",
+     *      mimeTypes = {"image/jpeg", "image/gif", "image/png", "image/tiff"},
+     *      maxSizeMessage = "The maxmimum allowed file size is 5MB.",
+     *      mimeTypesMessage = "Only the filetypes image are allowed.")
+     */
+    private $avatar;
+    
+    /**
+     *
+     * @var Avatar path 
+     * 
+     * @ORM\Column(type="string")
+     */
+    private $avatarPath;
 
     /**
      * @Assert\NotBlank()
@@ -383,5 +402,71 @@ class User implements UserInterface {
 
     public function setPlainPassword($password) {
         $this->plainPassword = $password;
+        return $this;
+    }
+    
+    /**
+     * Set avatar
+     *
+     * @param $avatar
+     *
+     * @return User
+     */
+    public function setAvatar(UploadedFile $avatar = null)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * Get avatar
+     *
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+    
+    public function serialize() {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+        ));
+    }
+
+    public function unserialize($serialized) {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+        ) = unserialize($serialized);
+    }
+
+
+    /**
+     * Set avatarPath
+     *
+     * @param string $avatarPath
+     *
+     * @return User
+     */
+    public function setAvatarPath($avatarPath)
+    {
+        $this->avatarPath = $avatarPath;
+
+        return $this;
+    }
+
+    /**
+     * Get avatarPath
+     *
+     * @return string
+     */
+    public function getAvatarPath()
+    {
+        return $this->avatarPath;
     }
 }

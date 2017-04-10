@@ -5,6 +5,7 @@ namespace Dipsycat\FbSocialBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -13,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="Dipsycat\FbSocialBundle\Repository\UserRepository")
  * @UniqueEntity("username")
  */
-class User implements UserInterface {
+class User implements UserInterface, \Serializable {
 
     /**
      * @var int
@@ -54,7 +55,8 @@ class User implements UserInterface {
     /**
      *
      * @var string facebookId
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Blank()
      */
     private $facebookId;
 
@@ -91,6 +93,24 @@ class User implements UserInterface {
      *      )
      * */
     private $myFriends;
+    
+    /**
+     * @Assert\File(maxSize = "5M")
+     * @Assert\Image(
+     *      maxSize = "5M",
+     *      mimeTypes = {"image/jpeg", "image/gif", "image/png", "image/tiff"},
+     *      maxSizeMessage = "The maxmimum allowed file size is 5MB.",
+     *      mimeTypesMessage = "Only the filetypes image are allowed.")
+     */
+    private $avatar;
+    
+    /**
+     *
+     * @var Avatar path 
+     * 
+     * @ORM\Column(type="string")
+     */
+    private $avatarPath;
 
     /**
      * Constructor
@@ -346,4 +366,93 @@ class User implements UserInterface {
         return $this->userConversations;
     }
 
+
+    /**
+     * Set facebookId
+     *
+     * @param string $facebookId
+     *
+     * @return User
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+
+        return $this;
+    }
+
+    /**
+     * Get facebookId
+     *
+     * @return string
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
+    }
+
+    /**
+     * Set avatar
+     *
+     * @param $avatar
+     *
+     * @return User
+     */
+    public function setAvatar(File $avatar)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * Get avatar
+     *
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+    
+    public function serialize() {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+        ));
+    }
+
+    public function unserialize($serialized) {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+        ) = unserialize($serialized);
+    }
+
+
+    /**
+     * Set avatarPath
+     *
+     * @param string $avatarPath
+     *
+     * @return User
+     */
+    public function setAvatarPath($avatarPath)
+    {
+        $this->avatarPath = $avatarPath;
+
+        return $this;
+    }
+
+    /**
+     * Get avatarPath
+     *
+     * @return string
+     */
+    public function getAvatarPath()
+    {
+        return $this->avatarPath;
+    }
 }
