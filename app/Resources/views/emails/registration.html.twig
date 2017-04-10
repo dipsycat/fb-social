@@ -1,0 +1,8 @@
+{# app/Resources/views/Emails/registration.html.twig #}
+<h3>You did it! You registered!</h3>
+
+Hi {{ name }}! You're successfully registered.
+
+Please, confirm your email: <a href="{{ url('dipsycat_fb_social_user_confirm_email', {confirm_url: confirm_url}) }}">Confirm here</a>.
+
+Thanks!

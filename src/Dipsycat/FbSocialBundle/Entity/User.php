@@ -2,6 +2,7 @@
 
 namespace Dipsycat\FbSocialBundle\Entity;
 
+use Dipsycat\FbSocialBundle\Service\MailerEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Dipsycat\FbSocialBundle\Repository\UserRepository")
  * @UniqueEntity("username")
  */
-class User implements UserInterface {
+class User implements UserInterface, MailerEntityInterface {
 
     /**
      * @var int
@@ -384,4 +385,9 @@ class User implements UserInterface {
     public function setPlainPassword($password) {
         $this->plainPassword = $password;
     }
+
+    public function getEmail() {
+        return 'maxim.sapronenkov@gmail.com';
+    }
+
 }

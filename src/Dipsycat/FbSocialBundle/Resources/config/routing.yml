@@ -23,7 +23,15 @@ dipsycat_fb_social_user_edit:
 dipsycat_fb_social_user_registration:
     path:  /registration
     defaults: { _controller: DipsycatFbSocialBundle:User:registrationUser }
-    
+
+dipsycat_fb_social_user_confirm_email_page:
+    path:  /confirm
+    defaults: { _controller: DipsycatFbSocialBundle:User:confirmPage }
+
+dipsycat_fb_social_user_confirm_email:
+    path:  /confirm/{confirm_url}
+    defaults: { _controller: DipsycatFbSocialBundle:User:confirm }
+
 dipsycat_fb_social_user_edit_post:
     path:  /edit_post
     defaults: { _controller: DipsycatFbSocialBundle:User:postUserForm }

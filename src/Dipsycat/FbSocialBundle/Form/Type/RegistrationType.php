@@ -61,7 +61,8 @@ class RegistrationType extends AbstractType {
     }
 
     public function getDefaultOptions(array $options) {
-        return array(//'data_class' => 'Dipsycat\FbSocialBundle\Entity\User',
+        return array(
+            //'data_class' => 'Dipsycat\FbSocialBundle\Entity\User',
         );
     }
 
