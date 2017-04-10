@@ -30,7 +30,7 @@
                                     <span class="chat-img pull-right">
                                         {% set image_url = message.user.avatarPath %}
                                         {% if image_url is not empty %}
-                                            <img src="{{ asset(message.user.avatarPath) | imagine_filter('my_thumb') }}" alt="User Avatar" class="img-circle" />
+                                            <img src="{{ asset(image_url) | imagine_filter('my_thumb') }}" alt="User Avatar" class="img-circle" />
                                         {% else %}
                                             <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
                                         {% endif %}
@@ -56,7 +56,7 @@
                                     <span class="chat-img pull-left">
                                         {% set image_url = message.user.avatarPath %}
                                         {% if image_url is not empty %}
-                                            <img src="{{ asset(message.user.avatarPath) | imagine_filter('my_thumb') }}" alt="User Avatar" class="img-circle" />
+                                            <img src="{{ asset(image_url) | imagine_filter('my_thumb') }}" alt="User Avatar" class="img-circle" />
                                         {% else %}
                                             <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
                                         {% endif %}
@@ -100,7 +100,15 @@
                     <div class="container-fluid">
                         <div class="row">
                             {% for member in conversation.users %}
-                                <div class="col-xs-12 member">{{ member.username }}</div>
+                                <div class="col-xs-12 member">
+                                    {{ member.username }}
+                                    {% set image_url = member.avatarPath %}
+                                    {% if image_url is not empty %}
+                                        <img src="{{ asset(image_url) | imagine_filter('my_thumb') }}" alt="User Avatar" class="img-circle" />
+                                    {% else %}
+                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+                                    {% endif %}
+                                </div>
                             {% endfor %}
                         </div>
                     </div>
