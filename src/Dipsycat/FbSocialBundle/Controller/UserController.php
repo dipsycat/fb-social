@@ -21,7 +21,7 @@ class UserController extends Controller {
     }
 
     public function getUserFormAction(Request $request) {
-        $user = new User();
+        $user = $this->getUser();
         $form = $this->createForm(new UserType(), $user, [
             'action' => $this->generateUrl('dipsycat_fb_social_user_edit_post')
         ]);
