@@ -15,7 +15,7 @@ class ConversationController extends Controller {
         return $this->render('DipsycatFbSocialBundle:Conversation:index.html.twig');
     }
 
-    public function newAction() {
+    public function newConverstaionAction() {
         return $this->render('DipsycatFbSocialBundle:Conversation:new.html.twig');
     }
 

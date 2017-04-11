@@ -18,15 +18,7 @@ use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class UserController extends Controller {
 
-    public function indexAction() {
-        return $this->render('DipsycatFbSocialBundle:User:index.html.twig');
-    }
-
-    public function editAction() {
-        return $this->render('DipsycatFbSocialBundle:User:edit.html.twig');
-    }
-
-    public function getUserFormAction(Request $request) {
+    public function getUserEditFormAction(Request $request) {
         $user = $this->getUser();
         $form = $this->createForm(new UserType(), $user, [
             'action' => $this->generateUrl('dipsycat_fb_social_user_edit_post')
@@ -36,7 +28,7 @@ class UserController extends Controller {
         ]);
     }
 
-    public function postUserFormAction(Request $request) {
+    public function postUserEditFormAction(Request $request) {
         $data = ['result' => 'error'];
         if ($request->isMethod(Request::METHOD_POST)) {
             $user = $this->getUser();

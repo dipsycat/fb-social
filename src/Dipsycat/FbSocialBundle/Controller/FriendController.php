@@ -12,7 +12,7 @@ class FriendController extends Controller {
         $user = $this->getUser();
         $friends = $user->getFriendsWithMe()->toArray();
         $friends = array_merge($friends, $user->getMyFriends()->toArray());
-        return $this->render('DipsycatFbSocialBundle:User:friends.html.twig', [
+        return $this->render('DipsycatFbSocialBundle:Friend:friends.html.twig', [
                     'friends' => $friends
         ]);
     }

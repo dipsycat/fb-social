@@ -18,7 +18,7 @@ dipsycat_fb_social_admin_home:
     
 dipsycat_fb_social_user_edit:
     path:  /edit
-    defaults: { _controller: DipsycatFbSocialBundle:User:getUserForm }
+    defaults: { _controller: DipsycatFbSocialBundle:User:getUserEditForm }
 
 dipsycat_fb_social_user_registration:
     path:  /registration
@@ -34,7 +34,7 @@ dipsycat_fb_social_user_confirm_email:
 
 dipsycat_fb_social_user_edit_post:
     path:  /edit_post
-    defaults: { _controller: DipsycatFbSocialBundle:User:postUserForm }
+    defaults: { _controller: DipsycatFbSocialBundle:User:postUserEditForm }
     
 dipsycat_fb_social_friend_list:
     path:  /friends
@@ -56,7 +56,7 @@ dipsycat_fb_social_conversation_list:
     
 dipsycat_fb_social_conversation_new:
     path:  /conversation/new
-    defaults: { _controller: DipsycatFbSocialBundle:Conversation:new }
+    defaults: { _controller: DipsycatFbSocialBundle:Conversation:newConverstaion }
     
 dipsycat_fb_social_conversation_new_post:
     path:  /conversation/new_post
