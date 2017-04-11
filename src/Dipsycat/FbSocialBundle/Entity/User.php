@@ -123,7 +123,6 @@ class User implements UserInterface, \Serializable, MailerEntityInterface {
     private $avatarPath;
 
     /**
-     * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
     private $plainPassword;

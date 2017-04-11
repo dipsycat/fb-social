@@ -29,8 +29,9 @@ class UserType extends AbstractType {
                 ->add('avatar', ImageType::class, [
                     'label' => false,
                     'attr' => [
-                        'class' => 'form-control'
+                        'class' => 'form-control',
                     ],
+                    'required' => false,
                     'image_path' => 'avatarPath'
                 ]);
     }
@@ -42,7 +43,7 @@ class UserType extends AbstractType {
     public function getDefaultOptions(array $options) {
         return array(
             //'data_class' => 'Dipsycat\FbSocialBundle\Entity\User',
-            'validation_groups' => array('edit')
+            //'validation_groups' => array('edit')
         );
     }
 

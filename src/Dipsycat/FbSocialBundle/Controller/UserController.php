@@ -11,35 +11,34 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller {
 
-    public function getUserEditFormAction(Request $request) {
+    public function userEditAction(Request $request) {
         $user = $this->getUser();
         $form = $this->createForm(new UserType(), $user, [
-            'action' => $this->generateUrl('dipsycat_fb_social_user_edit_post')
+            'action' => $this->generateUrl('dipsycat_fb_social_user_edit')
         ]);
-        return $this->render('DipsycatFbSocialBundle:User:edit.html.twig', [
-                    'form' => $form->createView()
-        ]);
-    }
-
-    public function postUserEditFormAction(Request $request) {
-        $data = ['result' => 'error'];
+        $errors = array();
         if ($request->isMethod(Request::METHOD_POST)) {
-            $user = $this->getUser();
             $form = $this->createForm(new UserType(), $user);
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            $validator = $this->get('validator');
+            $errors = $validator->validate($user);
+            if ($form->isSubmitted() && $form->isValid() && count($errors) == 0) {
                 $em = $this->getDoctrine()->getManager();
-                $Uploader = $this->get('app.uploader');
-                $fileName = $Uploader->uploadFile($user->getAvatar());
-                $user->setAvatarPath($fileName);
+                if (!empty($user->getAvatar())) {
+                    $Uploader = $this->get('app.uploader');
+                    $fileName = $Uploader->uploadFile($user->getAvatar());
+                    $user->setAvatarPath($fileName);
+                }
                 $em->persist($user);
                 $em->flush();
                 $this->addFlash('notice', 'Your changes were saved!');
-            } else {
-                $this->addFlash('notice', 'This username is already used/ @todo');
             }
         }
-        return $this->redirect($this->generateUrl('dipsycat_fb_social_user_edit'), 301);
+
+        return $this->render('DipsycatFbSocialBundle:User:edit.html.twig', [
+                    'form' => $form->createView(),
+                    'errors' => $errors
+        ]);
     }
 
     public function registrationUserAction(Request $request) {
@@ -47,31 +46,37 @@ class UserController extends Controller {
         $form = $this->createForm(new RegistrationType(), $user, [
             'action' => $this->generateUrl('dipsycat_fb_social_user_registration')
         ]);
-        $form->handleRequest($request);
-        $validator = $this->get('validator');
-        $errors = $validator->validate($user);
-        if ($form->isSubmitted() && $form->isValid() && count($errors) < 0) {
-            $em = $this->getDoctrine()->getManager();
-            $salt = hash('md5', time());
-            $user->setSalt($salt);
-            $password = $this->get('security.password_encoder')
-                    ->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
-            $roleRepository = $em->getRepository('DipsycatFbSocialBundle:Role');
-            $role = $roleRepository->findOneBy([
-                'name' => 'ROLE_CONFIRM'
-            ]);
-            $user->addUserRole($role);
-            $em->persist($user);
-            $em->flush();
-            $this->sendVerifyMessage($user);
+        if ($request->isMethod(Request::METHOD_POST)) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid() && $this->isValidateEntity($user)) {
+                $em = $this->getDoctrine()->getManager();
+                $salt = hash('md5', time());
+                $user->setSalt($salt);
+                $password = $this->get('security.password_encoder')
+                        ->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($password);
+                $roleRepository = $em->getRepository('DipsycatFbSocialBundle:Role');
+                $role = $roleRepository->findOneBy([
+                    'name' => 'ROLE_CONFIRM'
+                ]);
+                $user->addUserRole($role);
+                $em->persist($user);
+                $em->flush();
+                $this->sendVerifyMessage($user);
 
-            return $this->redirectToRoute('dipsycat_fb_social_user_confirm_email_page');
+                return $this->redirectToRoute('dipsycat_fb_social_user_confirm_email_page');
+            }
         }
 
         return $this->render('DipsycatFbSocialBundle:User:registration.html.twig', [
                     'form' => $form->createView()
         ]);
+    }
+
+    private function isValidateEntity($entity) {
+        $validator = $this->get('validator');
+        $errors = $validator->validate($entity);
+        return count($errors) > 0 ? false : true;
     }
 
     private function sendVerifyMessage($User) {

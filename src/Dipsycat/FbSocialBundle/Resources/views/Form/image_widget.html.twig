@@ -3,11 +3,13 @@
 {% block image_widget %}
     {% spaceless %}
         <div class="file-upload" data-text="Download your photo">
-           {{ block('form_widget') }}
+            {{ block('form_widget') }}
         </div>
         <div class="form-group" style="margin-top:10px;">
             {% if image_url is defined and image_url is not null %}
                 <img class="img-responsive downloaded-image" src="{{ asset(image_url) }}" alt="" />
+            {% else %}
+                <img class="img-responsive downloaded-image" src="" alt="" />
             {% endif %}
         </div>
     {% endspaceless %}

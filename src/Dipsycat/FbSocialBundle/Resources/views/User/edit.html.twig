@@ -16,11 +16,19 @@
                     <div class="row">
                         <div class="col-lg-6">
                             {% for flash_message in app.session.flashBag.get('notice') %}
-                                <div class="flash-notice">
+                                <div class="alert alert-success">
                                     {{ flash_message }}
                                 </div>
                             {% endfor %}
+
                             {{ form_start(form, {'attr': {'id': 'edit-profile'}}) }}
+                            {% if errors %}
+                                {% for error in errors %}
+                                <div class="alert alert-danger">
+                                    {{ error.message }}
+                                </div>
+                                {% endfor %}
+                            {% endif %}
                             <div class="form-group">
                                 {{ form_widget(form.username) }}
                             </div>
