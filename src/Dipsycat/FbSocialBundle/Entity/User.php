@@ -14,7 +14,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="Dipsycat\FbSocialBundle\Repository\UserRepository")
- * @UniqueEntity(fields={"username", "email"})
+ * @UniqueEntity(fields="username", message="Username is already used")
+ * @UniqueEntity(fields="email", message="Email is already used")
  */
 class User implements UserInterface, \Serializable, MailerEntityInterface {
 

@@ -29,7 +29,6 @@ class UserController extends Controller {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-
                 $Uploader = $this->get('app.uploader');
                 $fileName = $Uploader->uploadFile($user->getAvatar());
                 $user->setAvatarPath($fileName);
@@ -49,8 +48,9 @@ class UserController extends Controller {
             'action' => $this->generateUrl('dipsycat_fb_social_user_registration')
         ]);
         $form->handleRequest($request);
-        $error = [];
-        if ($form->isSubmitted() && $form->isValid()) {
+        $validator = $this->get('validator');
+        $errors = $validator->validate($user);
+        if ($form->isSubmitted() && $form->isValid() && count($errors) < 0) {
             $em = $this->getDoctrine()->getManager();
             $salt = hash('md5', time());
             $user->setSalt($salt);
@@ -67,13 +67,10 @@ class UserController extends Controller {
             $this->sendVerifyMessage($user);
 
             return $this->redirectToRoute('dipsycat_fb_social_user_confirm_email_page');
-        } else {
-            $error = $form->getErrors();
         }
 
         return $this->render('DipsycatFbSocialBundle:User:registration.html.twig', [
-                    'form' => $form->createView(),
-                    'error' => $error
+                    'form' => $form->createView()
         ]);
     }
 
