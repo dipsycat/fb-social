@@ -38,15 +38,15 @@ dipsycat_fb_social_user_edit_post:
     
 dipsycat_fb_social_friend_list:
     path:  /friends
-    defaults: { _controller: DipsycatFbSocialBundle:User:getFriends }
+    defaults: { _controller: DipsycatFbSocialBundle:Friend:getFriends }
 
 dipsycat_fb_social_friend_remove:
     path:  /friend/remove/{id}
-    defaults: { _controller: DipsycatFbSocialBundle:User:removeFriend }
+    defaults: { _controller: DipsycatFbSocialBundle:Friend:removeFriend }
 
 dipsycat_fb_social_friend_search:
     path:  /search
-    defaults: { _controller: DipsycatFbSocialBundle:User:searchUsers }
+    defaults: { _controller: DipsycatFbSocialBundle:Search:searchUsers }
     options:
             expose: true
 

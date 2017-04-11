@@ -110,7 +110,8 @@ class User implements UserInterface, \Serializable, MailerEntityInterface {
      *
      * @var Avatar path 
      * 
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Blank()
      */
     private $avatarPath;
 
