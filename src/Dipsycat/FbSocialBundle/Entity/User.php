@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="Dipsycat\FbSocialBundle\Repository\UserRepository")
- * @UniqueEntity("username")
+ * @UniqueEntity(fields={"username", "email"})
  */
 class User implements UserInterface, \Serializable, MailerEntityInterface {
 
@@ -53,6 +53,12 @@ class User implements UserInterface, \Serializable, MailerEntityInterface {
      * @ORM\Column(type="string", length=255)
      */
     private $salt;
+    
+    /**
+     * @var string email
+     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     */
+    private $email;
 
     /**
      *
@@ -473,7 +479,7 @@ class User implements UserInterface, \Serializable, MailerEntityInterface {
     }
 
     public function getEmail() {
-        return 'maxim.sapronenkov@gmail.com';
+        return $this->email;
     }
     
     public function hasRole(\Dipsycat\FbSocialBundle\Entity\Role $Role) {
@@ -485,4 +491,17 @@ class User implements UserInterface, \Serializable, MailerEntityInterface {
         return false;
     }
 
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
 }

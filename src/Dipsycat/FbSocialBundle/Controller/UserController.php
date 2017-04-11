@@ -65,9 +65,6 @@ class UserController extends Controller {
             $em->persist($user);
             $em->flush();
             $this->sendVerifyMessage($user);
-            $this->addFlash(
-                    'notice', 'Your account was registrated. Please see your email. Confirm it'
-            );
 
             return $this->redirectToRoute('dipsycat_fb_social_user_confirm_email_page');
         } else {

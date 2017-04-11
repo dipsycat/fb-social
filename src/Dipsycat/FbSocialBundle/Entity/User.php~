@@ -2,19 +2,21 @@
 
 namespace Dipsycat\FbSocialBundle\Entity;
 
+use Dipsycat\FbSocialBundle\Interfaces\MailerEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * User
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="Dipsycat\FbSocialBundle\Repository\UserRepository")
- * @UniqueEntity("username")
+ * @UniqueEntity({"username", "email"})
  */
-class User implements UserInterface, \Serializable {
+class User implements UserInterface, \Serializable, MailerEntityInterface {
 
     /**
      * @var int
@@ -51,6 +53,12 @@ class User implements UserInterface, \Serializable {
      * @ORM\Column(type="string", length=255)
      */
     private $salt;
+    
+    /**
+     * @var string email
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $email;
 
     /**
      *
@@ -62,7 +70,7 @@ class User implements UserInterface, \Serializable {
 
     /**
      * @var ArrayCollection $userRoles
-     * 
+     *
      * @ORM\ManyToMany(targetEntity="Role")
      * @ORM\JoinTable(name="user_role",
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
@@ -108,9 +116,16 @@ class User implements UserInterface, \Serializable {
      *
      * @var Avatar path 
      * 
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Blank()
      */
     private $avatarPath;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     /**
      * Constructor
@@ -125,7 +140,7 @@ class User implements UserInterface, \Serializable {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId() {
         return $this->id;
@@ -146,7 +161,7 @@ class User implements UserInterface, \Serializable {
     /**
      * Get username
      *
-     * @return string 
+     * @return string
      */
     public function getUsername() {
         return $this->username;
@@ -167,7 +182,7 @@ class User implements UserInterface, \Serializable {
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword() {
         return $this->password;
@@ -188,7 +203,7 @@ class User implements UserInterface, \Serializable {
     /**
      * Get salt
      *
-     * @return string 
+     * @return string
      */
     public function getSalt() {
         return $this->salt;
@@ -218,7 +233,7 @@ class User implements UserInterface, \Serializable {
     /**
      * Get userRoles
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUserRoles() {
         return $this->userRoles;
@@ -263,7 +278,7 @@ class User implements UserInterface, \Serializable {
     /**
      * Get surname
      *
-     * @return string 
+     * @return string
      */
     public function getSurname() {
         return $this->surname;
@@ -300,7 +315,7 @@ class User implements UserInterface, \Serializable {
     /**
      * Get friendsWithMe
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getFriendsWithMe() {
         return $this->friendsWithMe;
@@ -330,7 +345,7 @@ class User implements UserInterface, \Serializable {
     /**
      * Get myFriends
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMyFriends() {
         return $this->myFriends;
@@ -360,7 +375,7 @@ class User implements UserInterface, \Serializable {
     /**
      * Get userConversations
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUserConversations() {
         return $this->userConversations;
@@ -374,8 +389,7 @@ class User implements UserInterface, \Serializable {
      *
      * @return User
      */
-    public function setFacebookId($facebookId)
-    {
+    public function setFacebookId($facebookId) {
         $this->facebookId = $facebookId;
 
         return $this;
@@ -386,11 +400,19 @@ class User implements UserInterface, \Serializable {
      *
      * @return string
      */
-    public function getFacebookId()
-    {
+    public function getFacebookId() {
         return $this->facebookId;
     }
 
+    public function getPlainPassword() {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password) {
+        $this->plainPassword = $password;
+        return $this;
+    }
+    
     /**
      * Set avatar
      *
@@ -398,7 +420,7 @@ class User implements UserInterface, \Serializable {
      *
      * @return User
      */
-    public function setAvatar(File $avatar)
+    public function setAvatar(UploadedFile $avatar = null)
     {
         $this->avatar = $avatar;
 
@@ -454,5 +476,32 @@ class User implements UserInterface, \Serializable {
     public function getAvatarPath()
     {
         return $this->avatarPath;
+    }
+
+    public function getEmail() {
+        return $this->email;
+    }
+    
+    public function hasRole(\Dipsycat\FbSocialBundle\Entity\Role $Role) {
+        foreach($this->getUserRoles() as $existRole) {
+            if($existRole->getId() == $Role->getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
     }
 }

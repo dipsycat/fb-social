@@ -29,13 +29,13 @@ class RegistrationType extends AbstractType {
                     'class' => 'form-control'
                 ]
             ])
-            /*->add('email', EmailType::class, [
+            ->add('email', EmailType::class, [
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Email',
                     'class' => 'form-control'
                 ]
-            ])*/
+            ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
