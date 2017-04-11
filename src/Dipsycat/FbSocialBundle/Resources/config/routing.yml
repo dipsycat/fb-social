@@ -1,85 +1,23 @@
+auth:
+    resource: "@DipsycatFbSocialBundle/Resources/config/routing_auth.yml"
+    prefix:   /
+
+user:
+    resource: "@DipsycatFbSocialBundle/Resources/config/routing_user.yml"
+    prefix:   /
+    
+friend:
+    resource: "@DipsycatFbSocialBundle/Resources/config/routing_friend.yml"
+    prefix:   /
+    
+search:
+    resource: "@DipsycatFbSocialBundle/Resources/config/routing_search.yml"
+    prefix:   /
+    
+conversation:
+    resource: "@DipsycatFbSocialBundle/Resources/config/routing_conversation.yml"
+    prefix:   /
+
 dipsycat_fb_social_homepage:
     path:     /
     defaults: { _controller: DipsycatFbSocialBundle:Main:index }
-
-_security_login:
-    path:  /login
-    defaults: { _controller: DipsycatFbSocialBundle:Security:login }
-
-_security_check:
-    path:  /login_check
-
-_security_logout:
-    path:  /logout
-
-dipsycat_fb_social_admin_home:
-    path:  /admin/
-    defaults: { _controller: DipsycatFbSocialBundle:Admin:index }
-    
-dipsycat_fb_social_user_edit:
-    path:  /edit
-    defaults: { _controller: DipsycatFbSocialBundle:User:userEdit }
-
-dipsycat_fb_social_user_registration:
-    path:  /registration
-    defaults: { _controller: DipsycatFbSocialBundle:User:registrationUser }
-
-dipsycat_fb_social_user_confirm_email_page:
-    path:  /confirm
-    defaults: { _controller: DipsycatFbSocialBundle:User:confirmPage }
-
-dipsycat_fb_social_user_confirm_email:
-    path:  /confirm/{confirm_url}
-    defaults: { _controller: DipsycatFbSocialBundle:User:confirm }
-
-dipsycat_fb_social_friend_list:
-    path:  /friends
-    defaults: { _controller: DipsycatFbSocialBundle:Friend:getFriends }
-
-dipsycat_fb_social_friend_remove:
-    path:  /friend/remove/{id}
-    defaults: { _controller: DipsycatFbSocialBundle:Friend:removeFriend }
-
-dipsycat_fb_social_friend_search:
-    path:  /search
-    defaults: { _controller: DipsycatFbSocialBundle:Search:searchUsers }
-    options:
-            expose: true
-
-dipsycat_fb_social_conversation_list:
-    path:  /conversations
-    defaults: { _controller: DipsycatFbSocialBundle:Conversation:index }
-    
-dipsycat_fb_social_conversation_new:
-    path:  /conversation/new
-    defaults: { _controller: DipsycatFbSocialBundle:Conversation:newConverstaion }
-    
-dipsycat_fb_social_conversation_new_post:
-    path:  /conversation/new_post
-    defaults: { _controller: DipsycatFbSocialBundle:Conversation:newPost }
-
-dipsycat_fb_social_conversation:
-    path:  /conversation/{id}
-    defaults: { _controller: DipsycatFbSocialBundle:Conversation:getConversation }
-    requirements:
-            id: '\d+'
-            
-dipsycat_fb_social_conversation_send_message:
-    path:  /conversation/{id}/send
-    defaults: { _controller: DipsycatFbSocialBundle:Conversation:sendMessage }
-    requirements:
-            id: '\d+'
-            
-dipsycat_fb_social_conversation_message_edit:
-    path:  /conversation/message/edit/{id}
-    defaults: { _controller: DipsycatFbSocialBundle:Conversation:editMessage }
-    requirements:
-            id: '\d+'
-
-connect_facebook:
-    path:  /connect/facebook
-    defaults: { _controller: DipsycatFbSocialBundle:FacebookAuth:connectFacebook }
-
-connect_facebook_check:
-    path:  /connect/facebook-check
-    defaults: { _controller: DipsycatFbSocialBundle:FacebookAuth:connectFacebookCheck }

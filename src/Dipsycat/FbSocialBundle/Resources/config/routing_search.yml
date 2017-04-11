@@ -1,0 +1,5 @@
+dipsycat_fb_social_friend_search:
+    path:  /search
+    defaults: { _controller: DipsycatFbSocialBundle:Search:searchUsers }
+    options:
+            expose: true

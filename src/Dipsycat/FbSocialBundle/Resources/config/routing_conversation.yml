@@ -1,0 +1,29 @@
+dipsycat_fb_social_conversation_list:
+    path:  /conversations
+    defaults: { _controller: DipsycatFbSocialBundle:Conversation:index }
+    
+dipsycat_fb_social_conversation_new:
+    path:  /conversation/new
+    defaults: { _controller: DipsycatFbSocialBundle:Conversation:newConverstaion }
+    
+dipsycat_fb_social_conversation_new_post:
+    path:  /conversation/new_post
+    defaults: { _controller: DipsycatFbSocialBundle:Conversation:newPost }
+
+dipsycat_fb_social_conversation:
+    path:  /conversation/{id}
+    defaults: { _controller: DipsycatFbSocialBundle:Conversation:getConversation }
+    requirements:
+            id: '\d+'
+            
+dipsycat_fb_social_conversation_send_message:
+    path:  /conversation/{id}/send
+    defaults: { _controller: DipsycatFbSocialBundle:Conversation:sendMessage }
+    requirements:
+            id: '\d+'
+            
+dipsycat_fb_social_conversation_message_edit:
+    path:  /conversation/message/edit/{id}
+    defaults: { _controller: DipsycatFbSocialBundle:Conversation:editMessage }
+    requirements:
+            id: '\d+'
