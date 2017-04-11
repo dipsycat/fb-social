@@ -25,16 +25,18 @@
                                     <label>Name Conversation</label>
                                     <input class="form-control" name="name">
                                 </div>
-                                <div class="form-group">
-                                    <label>Add friends</label>
-                                    {% for friend in app.user.AllFriends %}
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="members[]" value="{{ friend.id }}">{{ friend.username }}
-                                            </label>
-                                        </div>
-                                    {% endfor %}
-                                </div>
+                                {% if app.user.AllFriends|length != 0 %}
+                                    <div class="form-group">
+                                        <label>Add friends</label>
+                                        {% for friend in app.user.AllFriends %}
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="members[]" value="{{ friend.id }}">{{ friend.username }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                                 <button type="submit" class="btn btn-default">Create</button>
                             </form>
                         </div>

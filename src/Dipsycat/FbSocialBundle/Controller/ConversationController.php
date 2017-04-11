@@ -28,6 +28,9 @@ class ConversationController extends Controller {
             $em->persist($conversation);
 
             $conversationMembers = $request->request->get('members');
+            if (empty($conversationMembers)) {
+                $conversationMembers = array();
+            }
             $conversationMembers = array_merge($conversationMembers, [$this->getUser()->getId()]);
             $userRepository = $em->getRepository('DipsycatFbSocialBundle:User');
 
@@ -38,6 +41,7 @@ class ConversationController extends Controller {
                     $em->persist($user);
                 }
             }
+
             $em->flush();
         }
         return $this->redirectToRoute('dipsycat_fb_social_conversation_list');
