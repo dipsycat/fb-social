@@ -2,6 +2,7 @@
 
 namespace Dipsycat\FbSocialBundle\Entity;
 
+use Dipsycat\FbSocialBundle\Service\MailerEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\Entity(repositoryClass="Dipsycat\FbSocialBundle\Repository\UserRepository")
  * @UniqueEntity("username")
  */
-class User implements UserInterface, \Serializable {
+class User implements UserInterface, \Serializable, MailerEntityInterface {
 
     /**
      * @var int
@@ -469,4 +470,9 @@ class User implements UserInterface, \Serializable {
     {
         return $this->avatarPath;
     }
+
+    public function getEmail() {
+        return 'maxim.sapronenkov@gmail.com';
+    }
+
 }

@@ -2,7 +2,10 @@
 
 namespace Dipsycat\FbSocialBundle\Controller;
 
+use Dipsycat\FbSocialBundle\Entity\Message;
 use Dipsycat\FbSocialBundle\Form\Type\RegistrationType;
+use Dipsycat\FbSocialBundle\Service\Mailer;
+use Dipsycat\FbSocialBundle\Service\MessageRegistration;
 use IAkumaI\SphinxsearchBundle\Exception\EmptyIndexException;
 use IAkumaI\SphinxsearchBundle\Exception\NoSphinxAPIException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,6 +14,7 @@ use Dipsycat\FbSocialBundle\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class UserController extends Controller {
 
@@ -154,17 +158,18 @@ class UserController extends Controller {
             $user->setPassword($password);
             $roleRepository = $em->getRepository('DipsycatFbSocialBundle:Role');
             $role = $roleRepository->findOneBy([
-                'name' => 'ROLE_ADMIN'
+                'name' => 'ROLE_CONFIRM'
             ]);
             $user->addUserRole($role);
             $em->persist($user);
             $em->flush();
+            $this->sendVerifyMessage($user);
             $this->addFlash(
                 'notice',
-                'Your account was registrated. Please log in'
+                'Your account was registrated. Please see your email. Confirm it'
             );
 
-            return $this->redirectToRoute('_security_login');
+            return $this->redirectToRoute('dipsycat_fb_social_user_confirm_email_page');
         } else {
             $error = $form->getErrors();
         }
@@ -173,6 +178,50 @@ class UserController extends Controller {
             'form' => $form->createView(),
             'error' => $error
         ]);
+    }
+
+    private function sendVerifyMessage($User) {
+        $Mailer = $this->get('app.mailer');
+
+        $data = [
+            'name' => $User->getUsername(),
+            'confirm_url' => $Mailer->createConfirmPath($User)
+        ];
+
+        $body = $this->renderView('emails/registration.html.twig', $data);
+        $MessageRegistration = new MessageRegistration('registration', $body);
+
+        return $Mailer->send($User, $MessageRegistration);
+    }
+
+    public function confirmPageAction() {
+        return $this->render('DipsycatFbSocialBundle:User:confirm.html.twig');
+    }
+
+    public function confirmAction(Request $request) {
+        $confirmUrl = $request->get('confirm_url');
+        $Mailer = $this->get('app.mailer');
+        if(!$Mailer->verifyUrl($confirmUrl)) {
+            throw $this->createNotFoundException('Not found');
+        }
+        $id = $Mailer->verifyUrl($confirmUrl);
+
+        $em = $this->getDoctrine()->getManager();
+        $userRepository = $em->getRepository('DipsycatFbSocialBundle:User');
+        $User = $userRepository->find($id);
+        $roleRepository = $em->getRepository('DipsycatFbSocialBundle:Role');
+        $Role = $roleRepository->findOneBy([
+            'name' => 'ROLE_ADMIN'
+        ]);
+        $User->addUserRole($Role);
+        $em->persist($User);
+        $em->flush();
+        $this->addFlash(
+            'notice',
+            'Your account is confirmed'
+        );
+
+        return $this->redirectToRoute('_security_login');
     }
 
 }
