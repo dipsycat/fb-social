@@ -1,6 +1,6 @@
 <?php
 
-namespace Dipsycat\FbSocialBundle\Service;
+namespace Dipsycat\FbSocialBundle\Interfaces;
 
 
 interface MessageInterface {

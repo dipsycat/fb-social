@@ -2,7 +2,7 @@
 
 namespace Dipsycat\FbSocialBundle\Entity;
 
-use Dipsycat\FbSocialBundle\Service\MailerEntityInterface;
+use Dipsycat\FbSocialBundle\Interfaces\MailerEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -474,6 +474,15 @@ class User implements UserInterface, \Serializable, MailerEntityInterface {
 
     public function getEmail() {
         return 'maxim.sapronenkov@gmail.com';
+    }
+    
+    public function hasRole(\Dipsycat\FbSocialBundle\Entity\Role $Role) {
+        foreach($this->getUserRoles() as $existRole) {
+            if($existRole->getId() == $Role->getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

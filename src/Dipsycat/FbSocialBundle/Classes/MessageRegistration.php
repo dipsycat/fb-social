@@ -1,7 +1,8 @@
 <?php
 
-namespace Dipsycat\FbSocialBundle\Service;
+namespace Dipsycat\FbSocialBundle\Classes;
 
+use Dipsycat\FbSocialBundle\Interfaces\MessageInterface;
 
 class MessageRegistration implements MessageInterface {
 

@@ -2,19 +2,12 @@
 
 namespace Dipsycat\FbSocialBundle\Controller;
 
-use Dipsycat\FbSocialBundle\Entity\Message;
 use Dipsycat\FbSocialBundle\Form\Type\RegistrationType;
-use Dipsycat\FbSocialBundle\Service\Mailer;
-use Dipsycat\FbSocialBundle\Service\MessageRegistration;
-use IAkumaI\SphinxsearchBundle\Exception\EmptyIndexException;
-use IAkumaI\SphinxsearchBundle\Exception\NoSphinxAPIException;
+use Dipsycat\FbSocialBundle\Classes\MessageRegistration;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Dipsycat\FbSocialBundle\Entity\User;
 use Dipsycat\FbSocialBundle\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class UserController extends Controller {
 
@@ -36,7 +29,7 @@ class UserController extends Controller {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-                
+
                 $Uploader = $this->get('app.uploader');
                 $fileName = $Uploader->uploadFile($user->getAvatar());
                 $user->setAvatarPath($fileName);
@@ -62,7 +55,7 @@ class UserController extends Controller {
             $salt = hash('md5', time());
             $user->setSalt($salt);
             $password = $this->get('security.password_encoder')
-                ->encodePassword($user, $user->getPlainPassword());
+                    ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $roleRepository = $em->getRepository('DipsycatFbSocialBundle:Role');
             $role = $roleRepository->findOneBy([
@@ -73,8 +66,7 @@ class UserController extends Controller {
             $em->flush();
             $this->sendVerifyMessage($user);
             $this->addFlash(
-                'notice',
-                'Your account was registrated. Please see your email. Confirm it'
+                    'notice', 'Your account was registrated. Please see your email. Confirm it'
             );
 
             return $this->redirectToRoute('dipsycat_fb_social_user_confirm_email_page');
@@ -83,8 +75,8 @@ class UserController extends Controller {
         }
 
         return $this->render('DipsycatFbSocialBundle:User:registration.html.twig', [
-            'form' => $form->createView(),
-            'error' => $error
+                    'form' => $form->createView(),
+                    'error' => $error
         ]);
     }
 
@@ -109,7 +101,7 @@ class UserController extends Controller {
     public function confirmAction(Request $request) {
         $confirmUrl = $request->get('confirm_url');
         $Mailer = $this->get('app.mailer');
-        if(!$Mailer->verifyUrl($confirmUrl)) {
+        if (!$Mailer->verifyUrl($confirmUrl)) {
             throw $this->createNotFoundException('Not found');
         }
         $id = $Mailer->verifyUrl($confirmUrl);
@@ -121,12 +113,18 @@ class UserController extends Controller {
         $Role = $roleRepository->findOneBy([
             'name' => 'ROLE_ADMIN'
         ]);
+        if ($User->hasRole($Role)) {
+            $this->addFlash(
+                    'notice', 'Your account was confirmed'
+            );
+            return $this->redirectToRoute('_security_login');
+        }
+
         $User->addUserRole($Role);
         $em->persist($User);
         $em->flush();
         $this->addFlash(
-            'notice',
-            'Your account is confirmed'
+                'notice', 'Your account is confirmed'
         );
 
         return $this->redirectToRoute('_security_login');

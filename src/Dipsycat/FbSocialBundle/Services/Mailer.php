@@ -1,8 +1,10 @@
 <?php
 
-namespace Dipsycat\FbSocialBundle\Service;
+namespace Dipsycat\FbSocialBundle\Services;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Dipsycat\FbSocialBundle\Interfaces\MailerEntityInterface;
+use Dipsycat\FbSocialBundle\Interfaces\MessageInterface;
 
 class Mailer {
 

@@ -14,5 +14,5 @@ services:
         tags:
             - { name: form.type, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
     app.mailer:
-            class: Dipsycat\FbSocialBundle\Service\Mailer
+            class: Dipsycat\FbSocialBundle\Services\Mailer
             arguments: ['@service_container', '@mailer']
