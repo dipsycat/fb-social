@@ -9,6 +9,8 @@ use Dipsycat\FbSocialBundle\Interfaces\MessageInterface;
 class Mailer {
 
     const MAILER_USER = 'mailer_user';
+    const TIMEOUT_CONFIRM = 86000;
+    
     private $container;
     private $mailer;
 
@@ -52,7 +54,7 @@ class Mailer {
         if(empty($data->id) || empty($data->date)) {
             return false;
         }
-        if(time() - $data->date >= 86000) {
+        if(time() - $data->date >= self::TIMEOUT_CONFIRM) {
             return false;
         }
         return $data->id;
