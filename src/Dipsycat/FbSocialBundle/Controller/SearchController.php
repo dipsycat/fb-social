@@ -43,8 +43,11 @@ class SearchController extends Controller {
             ];
             return new JsonResponse($result);
         }
+        file_put_contents('d:\1.txt', print_r($data, true)); 
         foreach ($data['matches'] as $user) {
             $entity = $user['entity'];
+            
+            
             $result['data'][$entity->getId()] = $entity->getUsername();
         }
         return new JsonResponse($result);

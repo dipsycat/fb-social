@@ -1,0 +1,3 @@
+dipsycat_fb_social_map:
+    path:  /map
+    defaults: { _controller: DipsycatFbSocialBundle:Map:index }

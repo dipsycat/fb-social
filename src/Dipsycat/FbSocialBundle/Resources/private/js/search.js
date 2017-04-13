@@ -1,12 +1,14 @@
 $('#search-btn').click(function () {
 
 });
-$('#search-text').keydown(function () {
+$('#search-text').keyup(function () {
     var url = Routing.generate('dipsycat_fb_social_friend_search');
+    var searchText = $(this).val();
     var data = {
-        'search_text': $(this).val()
+        'search_text': searchText
     };
-    if ($(this).val().length == 1) {
+    
+    if (searchText.length == 1) {
         $.ajax({
             type: 'get',
             url: url,

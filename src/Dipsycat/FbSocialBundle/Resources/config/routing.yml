@@ -17,6 +17,10 @@ search:
 conversation:
     resource: "@DipsycatFbSocialBundle/Resources/config/routing_conversation.yml"
     prefix:   /
+    
+map:
+    resource: "@DipsycatFbSocialBundle/Resources/config/routing_map.yml"
+    prefix:   /
 
 dipsycat_fb_social_homepage:
     path:     /
