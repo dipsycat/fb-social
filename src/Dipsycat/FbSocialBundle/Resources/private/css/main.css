@@ -73,3 +73,7 @@
   width: 100%;
   opacity: 0;
 }
+
+#map_canvas .open-claim {
+    display: none;
+}

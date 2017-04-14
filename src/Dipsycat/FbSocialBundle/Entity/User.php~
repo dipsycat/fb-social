@@ -14,7 +14,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="Dipsycat\FbSocialBundle\Repository\UserRepository")
- * @UniqueEntity({"username", "email"})
+ * @UniqueEntity(fields="username", message="Username is already used")
+ * @UniqueEntity(fields="email", message="Email is already used")
  */
 class User implements UserInterface, \Serializable, MailerEntityInterface {
 
@@ -56,7 +57,7 @@ class User implements UserInterface, \Serializable, MailerEntityInterface {
     
     /**
      * @var string email
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      */
     private $email;
 
@@ -122,7 +123,6 @@ class User implements UserInterface, \Serializable, MailerEntityInterface {
     private $avatarPath;
 
     /**
-     * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
     private $plainPassword;
