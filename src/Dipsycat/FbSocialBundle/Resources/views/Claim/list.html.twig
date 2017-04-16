@@ -1,0 +1,38 @@
+{% extends 'DipsycatFbSocialBundle::layout.html.twig' %}
+{% block title %}
+    Claim
+{% endblock %}
+{% block wrapper %}
+    {{ parent() }}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Fb Social
+            </h1>
+            <table class="table">
+                <thead>
+                <tr>
+
+                    <th>Id</th>
+                    <th>Comment</th>
+                    <th>Status</th>
+                    <th>View</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for claim in claims %}
+                    <tr>
+                        <td>{{ claim.id }}</td>
+                        <td>{{ claim.comment }}</td>
+                        <td>{{ claim.status }}</td>
+                        <td><a href="{{ path('dipsycat_fb_social_claim', {id: claim.id}) }}">View</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+{% endblock %}

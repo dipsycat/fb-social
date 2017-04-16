@@ -1,3 +1,7 @@
+dipsycat_fb_social_claims:
+    path:  /claims
+    defaults: { _controller: DipsycatFbSocialBundle:Claim:list }
+
 dipsycat_fb_social_claim:
     path:  /claim/{id}
     defaults: { _controller: DipsycatFbSocialBundle:Claim:index }

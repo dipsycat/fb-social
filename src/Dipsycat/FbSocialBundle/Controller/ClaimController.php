@@ -42,4 +42,14 @@ class ClaimController extends Controller {
         ]);
     }
 
+    public function listAction() {
+
+        $em = $this->getDoctrine()->getManager();
+        $claimRepository = $em->getRepository('DipsycatFbSocialBundle:Claim');
+        $claims = $claimRepository->findAll();
+        return $this->render('DipsycatFbSocialBundle:Claim:list.html.twig', [
+            'claims' => $claims,
+        ]);
+    }
+
 }
