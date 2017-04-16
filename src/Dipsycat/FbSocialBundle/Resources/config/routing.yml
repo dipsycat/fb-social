@@ -22,6 +22,10 @@ map:
     resource: "@DipsycatFbSocialBundle/Resources/config/routing_map.yml"
     prefix:   /
 
+claim:
+    resource: "@DipsycatFbSocialBundle/Resources/config/routing_claim.yml"
+    prefix:   /
+
 dipsycat_fb_social_homepage:
     path:     /
     defaults: { _controller: DipsycatFbSocialBundle:Main:index }

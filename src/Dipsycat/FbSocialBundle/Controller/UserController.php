@@ -18,7 +18,7 @@ class UserController extends Controller {
         ]);
         $errors = array();
         if ($request->isMethod(Request::METHOD_POST)) {
-            $form = $this->createForm(new UserType(), $user);
+            $form = $this->createForm(new UserType(), $user);//@todo
             $form->handleRequest($request);
             $validator = $this->get('validator');
             $errors = $validator->validate($user);

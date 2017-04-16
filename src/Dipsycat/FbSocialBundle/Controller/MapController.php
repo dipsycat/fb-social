@@ -17,7 +17,7 @@ class MapController extends Controller {
     public function indexAction() {
         $map = $this->mapInit();
         return $this->render('DipsycatFbSocialBundle:Map:index.html.twig', [
-                    'map' => $map
+            'map' => $map
         ]);
     }
 
@@ -35,21 +35,28 @@ class MapController extends Controller {
             $marker = new MarkerAdapter($claim);
             $map->getOverlayManager()->addMarker($marker);
             //$marker = $marker->getInfoWindow()->getVariable();
-           
+
             $eventDOM = new Event(
-                    "document.getElementById('open-claim')", 'click', "
+                "document.getElementById('open-claim')", 'click', "
 function(){
 console.log(chmok);
 }
 "
             );
-            $domEventString = $map->getVariable().'_container.events.dom_events.event'.$eventDOM->getVariable().' = event'.$eventDOM->getVariable().' = google.maps.event.addDomListener('.$eventDOM->getInstance().', "click", ' . $eventDOM->getHandle() . ');';
-
+            $domEventString = $map->getVariable() . '_container.events.dom_events.event' . $eventDOM->getVariable() . ' = event' . $eventDOM->getVariable() . ' = google.maps.event.addDomListener(' . $eventDOM->getInstance() . ', "click", ' . $eventDOM->getHandle() . ');';
+            
             $event = new Event(
-                    $marker->getVariable(), 'click', 'function(){
-'.'console.log("open");
+                $marker->getVariable(), 'click', 'function(){
+' . 'console.log("open");
 ' . $domEventString . '
 }', true
+            );
+            $event = new Event(
+                $marker->getVariable(), 'click', 'function(){
+                    console.log("click");
+                    var open = document.getElementsByClassName(".open-claim");
+                    console.log(open);
+                }', true
             );
             $map->getEventManager()->addEvent($event);
         }
@@ -64,7 +71,7 @@ console.log(chmok);
         $claimRepository = $em->getRepository('DipsycatFbSocialBundle:Claim');
         return $claimRepository->findAll();
     }
-    
+
     public function addClaimAction(\Symfony\Component\HttpFoundation\Request $request) {
         $data = $request->get('data');
         $data = json_decode($data);

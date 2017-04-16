@@ -31,3 +31,11 @@
         </div>
     </div>
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    function open() {
+        console.log('open');
+    }
+    </script>
+{% endblock %}

@@ -1,0 +1,5 @@
+dipsycat_fb_social_claim:
+    path:  /claim/{id}
+    defaults: { _controller: DipsycatFbSocialBundle:Claim:index }
+    requirements:
+                id: '\d+'
