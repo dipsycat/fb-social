@@ -11,9 +11,11 @@
             </h1>
             <h2>Comment: {{ claim.comment }}</h2>
             <h2>Date {{ claim.createdAt|date("m/d/Y") }}</h2>
-            <a href="{{ asset(claim.photoPath) }}" target="_blank">
-                <img src="{{ asset(claim.photoPath) }}" class="img-responsive" style="width:300px;height:300px;">
-            </a>
+            {% if  claim.photoPath is not empty %}
+                <a href="{{ asset(claim.photoPath) }}" target="_blank">
+                    <img src="{{ asset(claim.photoPath) }}" class="img-responsive" style="width:300px;height:300px;">
+                </a>
+            {% endif %}
             {{ form_start(form) }}
             <div class="form-group">
                 <h2>
