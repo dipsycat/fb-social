@@ -77,3 +77,12 @@
 #map_canvas .open-claim {
     display: none;
 }
+
+.claims tr[data-href] {
+    cursor: pointer;
+}
+
+.claims tr[data-href]:hover {
+    background-color: #ecece6;
+}
+
