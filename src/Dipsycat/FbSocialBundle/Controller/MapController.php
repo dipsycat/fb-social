@@ -11,18 +11,28 @@ use Ivory\GoogleMap\Overlay\InfoWindow;
 use Ivory\GoogleMap\Control\ControlPosition;
 use Ivory\GoogleMap\Event\Event;
 use Dipsycat\FbSocialBundle\Classes\MarkerAdapter;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Dipsycat\FbSocialBundle\Entity\Claim;
 
 class MapController extends Controller {
 
-    public function indexAction() {
-        $map = $this->mapInit();
+    public function indexAction(Request $request) {
+        $dataStart = new \DateTime();
+        $data = [
+            'status' => !empty($request->get('status')) ? $request->get('status') : array_values(Claim::getAllStatuses()),
+            'dateStart' => !empty($request->get('date-start')) ? $request->get('date-start') : $dataStart->format('y-m-d'),
+            'dateEnd' => !empty($request->get('date-end')) ? $request->get('date-end') : $dataStart->format('y-m-d'),
+        ];
+        $map = $this->mapInit($data);
         return $this->render('DipsycatFbSocialBundle:Map:index.html.twig', [
-            'map' => $map
+                    'map' => $map,
+                    'data' => $data
         ]);
     }
 
-    private function mapInit() {
-        $map = new Map();
+    private function mapInit($data) {
+        $map =new Map();
         $map->setCenter(new Coordinate(59.955674, 30.2816493));
         $map->setMapOption('zoom', 10);
         $map->setStylesheetOption('width', '95%');
@@ -30,35 +40,10 @@ class MapController extends Controller {
         $map->setStylesheetOption('position', 'absolute');
         $map->setHtmlId('map_canvas');
 
-        $claims = $this->getClaims();
+        $claims = $this->getClaims($data);
         foreach ($claims as $claim) {
             $marker = new MarkerAdapter($claim);
             $map->getOverlayManager()->addMarker($marker);
-            //$marker = $marker->getInfoWindow()->getVariable();
-
-            $eventDOM = new Event(
-                "document.getElementById('open-claim')", 'click', "
-function(){
-console.log(chmok);
-}
-"
-            );
-            $domEventString = $map->getVariable() . '_container.events.dom_events.event' . $eventDOM->getVariable() . ' = event' . $eventDOM->getVariable() . ' = google.maps.event.addDomListener(' . $eventDOM->getInstance() . ', "click", ' . $eventDOM->getHandle() . ');';
-            
-            $event = new Event(
-                $marker->getVariable(), 'click', 'function(){
-' . 'console.log("open");
-' . $domEventString . '
-}', true
-            );
-            $event = new Event(
-                $marker->getVariable(), 'click', 'function(){
-                    console.log("click");
-                    var open = document.getElementsByClassName(".open-claim");
-                    console.log(open);
-                }', true
-            );
-            $map->getEventManager()->addEvent($event);
         }
 
         $fullscreenControl = new FullscreenControl(ControlPosition::TOP_LEFT);
@@ -66,13 +51,14 @@ console.log(chmok);
         return $map;
     }
 
-    private function getClaims() {
+    private function getClaims($data) {
         $em = $this->getDoctrine()->getManager();
         $claimRepository = $em->getRepository('DipsycatFbSocialBundle:Claim');
-        return $claimRepository->findAll();
+        $claims = $claimRepository->getClaims($data);
+        return $claims;
     }
 
-    public function addClaimAction(\Symfony\Component\HttpFoundation\Request $request) {
+    public function addClaimAction(Request $request) {
         $data = $request->get('data');
         $data = json_decode($data);
         $Claim = new Claim();

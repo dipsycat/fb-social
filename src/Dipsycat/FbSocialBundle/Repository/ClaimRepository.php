@@ -11,5 +11,20 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class ClaimRepository extends EntityRepository {
-    
+
+    public function getClaims($data) {
+        $queryBuilder = $this->createQueryBuilder('claim');
+        $result = $queryBuilder
+                        ->where('claim.createdAt >= :dateStart')
+                        ->andWhere('claim.createdAt <= :dateEnd')
+                        ->andWhere('claim.status IN (:statuses)')
+                        ->setParameters([
+                            'dateStart' => $data['dateStart'],
+                            'dateEnd' => $data['dateEnd'],
+                            'statuses' => $data['status'],
+                        ])
+                        ->getQuery()->getResult();
+        return $result;
+    }
+
 }

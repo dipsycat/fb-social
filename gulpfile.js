@@ -7,6 +7,7 @@ var gulp = require('gulp'),
 gulp.task('app-css', function () {
     return gulp.src([
         'src/Dipsycat/AppBundle/Resources/private/bootstrap/dist/css/bootstrap.min.css',
+        'src/Dipsycat/AppBundle/Resources/private/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
         'src/Dipsycat/AppBundle/Resources/private/metisMenu/dist/metisMenu.min.css'
     ])
         .pipe(concatCss('app.min.css'))
@@ -28,6 +29,8 @@ gulp.task('app-js', function () {
     return gulp.src([
         'src/Dipsycat/AppBundle/Resources/private/jquery/dist/jquery.min.js',
         'src/Dipsycat/AppBundle/Resources/private/bootstrap/dist/js/bootstrap.min.js',
+        'src/Dipsycat/AppBundle/Resources/private/moment/min/moment.min.js',
+        'src/Dipsycat/AppBundle/Resources/private/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
         'src/Dipsycat/AppBundle/Resources/private/metisMenu/dist/metisMenu.min.js',
         'vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.js',
         'src/Dipsycat/FbSocialBundle/Resources/private/**/*.js'
