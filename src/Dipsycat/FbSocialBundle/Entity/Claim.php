@@ -60,6 +60,11 @@ class Claim {
      */
     private $photoPath;
     
+    public function __construct() {
+        $this->setCreatedAt(new \DateTime());
+    }
+
+    
     /**
      * Get id
      *
