@@ -88,6 +88,12 @@ class User implements UserInterface, \Serializable, MailerEntityInterface {
      * )
      */
     private $userConversations;
+    
+     /**
+     * User claims
+     * @ORM\OneToMany(targetEntity="Claim", mappedBy="user")
+     */
+    private $claims;
 
     /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="myFriends")
@@ -118,7 +124,6 @@ class User implements UserInterface, \Serializable, MailerEntityInterface {
      * @var Avatar path 
      * 
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\Blank()
      */
     private $avatarPath;
 
@@ -135,6 +140,7 @@ class User implements UserInterface, \Serializable, MailerEntityInterface {
         $this->friendsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myFriends = new \Doctrine\Common\Collections\ArrayCollection();
         $this->userConversations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->claims = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

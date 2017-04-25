@@ -60,6 +60,12 @@ class Claim {
      */
     private $photoPath;
     
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="claims")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     */
+    private $user;
+    
     public function __construct() {
         $this->setCreatedAt(new \DateTime());
     }
@@ -225,5 +231,29 @@ class Claim {
     public function getPhotoPath()
     {
         return $this->photoPath;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Dipsycat\FbSocialBundle\Entity\User $user
+     *
+     * @return Claim
+     */
+    public function setUser(\Dipsycat\FbSocialBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Dipsycat\FbSocialBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

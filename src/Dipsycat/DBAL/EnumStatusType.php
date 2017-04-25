@@ -3,7 +3,7 @@
 namespace Dipsycat\DBAL;
 
 class EnumStatusType extends EnumType {
-    protected $name = 'status';
+    protected $name = 'enumstatus';
     protected $values = [
         'open',
         'in progress',

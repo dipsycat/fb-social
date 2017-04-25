@@ -61,6 +61,17 @@ class Claim {
     private $photoPath;
     
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="claims")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+    
+    public function __construct() {
+        $this->setCreatedAt(new \DateTime());
+    }
+
+    
+    /**
      * Get id
      *
      * @return integer
@@ -196,5 +207,29 @@ class Claim {
             self::STATUS_IN_PROGRESS => self::STATUS_IN_PROGRESS,
             self::STATUS_CLOSED => self::STATUS_CLOSED
         ];
+    }
+
+    /**
+     * Set photoPath
+     *
+     * @param string $photoPath
+     *
+     * @return Claim
+     */
+    public function setPhotoPath($photoPath)
+    {
+        $this->photoPath = $photoPath;
+
+        return $this;
+    }
+
+    /**
+     * Get photoPath
+     *
+     * @return string
+     */
+    public function getPhotoPath()
+    {
+        return $this->photoPath;
     }
 }

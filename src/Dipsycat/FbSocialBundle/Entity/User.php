@@ -88,6 +88,12 @@ class User implements UserInterface, \Serializable, MailerEntityInterface {
      * )
      */
     private $userConversations;
+    
+     /**
+     * User claims
+     * @ORM\OneToMany(targetEntity="Claim", mappedBy="user")
+     */
+    private $claims;
 
     /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="myFriends")
@@ -134,6 +140,7 @@ class User implements UserInterface, \Serializable, MailerEntityInterface {
         $this->friendsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myFriends = new \Doctrine\Common\Collections\ArrayCollection();
         $this->userConversations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->claims = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -502,5 +509,39 @@ class User implements UserInterface, \Serializable, MailerEntityInterface {
         $this->email = $email;
 
         return $this;
+    }
+
+    /**
+     * Add claim
+     *
+     * @param \Dipsycat\FbSocialBundle\Entity\Claim $claim
+     *
+     * @return User
+     */
+    public function addClaim(\Dipsycat\FbSocialBundle\Entity\Claim $claim)
+    {
+        $this->claims[] = $claim;
+
+        return $this;
+    }
+
+    /**
+     * Remove claim
+     *
+     * @param \Dipsycat\FbSocialBundle\Entity\Claim $claim
+     */
+    public function removeClaim(\Dipsycat\FbSocialBundle\Entity\Claim $claim)
+    {
+        $this->claims->removeElement($claim);
+    }
+
+    /**
+     * Get claims
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getClaims()
+    {
+        return $this->claims;
     }
 }
